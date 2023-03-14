@@ -1,3 +1,4 @@
+import 'package:chur/src/ui/setting/setting_home.dart';
 import 'package:chur/src/ui/timetable/calender.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: Calendar(),
+        home: SettingHome(),
     );
   }
 
