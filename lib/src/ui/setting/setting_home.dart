@@ -6,7 +6,18 @@ class Setting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "설정하기",
+      home: Scaffold(
+        body: Column(
+          children: [
+            Row(
+              children: [
+                Icon(Icons.settings),
+                Text('설정하기')
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
