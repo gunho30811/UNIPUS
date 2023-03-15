@@ -1,5 +1,4 @@
-import 'package:chur/src/ui/setting/example.dart';
-import 'package:chur/src/ui/setting/setting_home.dart';
+import 'package:chur/src/ui/setting/setting_main.dart';
 import 'package:chur/src/ui/timetable/calender.dart';
 import 'package:flutter/material.dart';
 
