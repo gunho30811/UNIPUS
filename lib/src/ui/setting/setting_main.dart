@@ -7,169 +7,279 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-        appBar: AppBar(
-          title: Title(
-            color: Colors.black,
-            child: Row(
-              children: [
-                Icon(Icons.settings),
-                SizedBox(width: 16),
-                Text('설정하기', style: TextStyle(fontSize: 18)),
-              ],
+        body: SingleChildScrollView(
+      child: Container(
+        width: displayWidth(context) * 1,
+        height: displayHeight(context) * 1,
+        color: Colors.grey[200],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: displayHeight(context) * 0.01,
             ),
-          ),
+            Container(
+              child: Row(
+                children: [
+                  SizedBox(width: displayWidth(context) * 0.05),
+                  Icon(Icons.settings),
+                  SizedBox(width: 16),
+                  Text('설정하기',
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: displayHeight(context) * 0.02,
+            ),
+            Container(
+              width: displayWidth(context) * 0.9,
+              height: displayHeight(context) * 0.4,
+              padding: EdgeInsets.all(displayWidth(context) * 0.03),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '박봉근',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // show name edit popup
+                        },
+                        child: Text('수정하기',
+                            style: TextStyle(
+                                fontSize: 15, color: Color(0xffA8A8B0))),
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    height: 1, // set the height of the line
+                    thickness: 1, // set the thickness of the line
+                    color: Colors.grey[300], // set the color of the line
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.notifications_none_outlined),
+                          SizedBox(
+                            width: displayWidth(context) * 0.02,
+                          ),
+                          Text('알림설정'),
+                        ],
+                      ),
+                      CupertinoSwitch(
+                        value: true,
+                        activeColor: Color(0xff34C759),
+                        // set the thumb color to blue
+                        trackColor: Colors.grey[300],
+                        // set the track color to light grey
+                        onChanged: (value) {
+                          // toggle notifications on/off
+                        },
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    height: 1, // set the height of the line
+                    thickness: 1, // set the thickness of the line
+                    color: Colors.grey[300], // set the color of the line
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.palette_outlined),
+                          SizedBox(
+                            width: displayWidth(context) * 0.02,
+                          ),
+                          Text('카테고리'),
+                        ],
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // show category setting popup
+                        },
+                        child: Text('설정',
+                            style: TextStyle(
+                                fontSize: 15, color: Color(0xffA8A8B0))),
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    height: 1, // set the height of the line
+                    thickness: 1, // set the thickness of the line
+                    color: Colors.grey[300], // set the color of the line
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.access_time),
+                          SizedBox(
+                            width: displayWidth(context) * 0.02,
+                          ),
+                          Text('주간 시간표 시작시간 설정'),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text('Start Time'),
+                          CupertinoButton(
+                            onPressed: () {
+                              // show start time picker
+                            },
+                            child: Text(
+                              '12:00AM',
+                              style: TextStyle(
+                                  fontSize: 15, color: Color(0xffA8A8B0)),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text('End Time'),
+                          CupertinoButton(
+                            onPressed: () {
+                              // show end time picker
+                            },
+                            child: Text(
+                              '6:00PM',
+                              style: TextStyle(
+                                  fontSize: 15, color: Color(0xffA8A8B0)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: displayHeight(context) * 0.02),
+            Container(
+              width: displayWidth(context) * 0.9,
+              height: displayHeight(context) * 0.12,
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.person_outlined),
+                          SizedBox(
+                            width: displayWidth(context) * 0.02,
+                          ),
+                          Text('User Code'),
+                        ],
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                            foregroundColor: Color(0xffA8A8B0)),
+                        onPressed: () {
+                          // show user code information
+                        },
+                        child: Text('123456A'),
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    height: 1, // set the height of the line
+                    thickness: 1, // set the thickness of the line
+                    color: Colors.grey[300], // set the color of the line
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.published_with_changes_outlined),
+                          SizedBox(
+                            width: displayWidth(context) * 0.02,
+                          ),
+                          Text('Change Version'),
+                        ],
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                            foregroundColor: Color(0xffA8A8B0)),
+                        onPressed: () {
+                          // show version change popup
+                        },
+                        child: Text('Mento'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: displayHeight(context) * 0.02),
+            Container(
+              width: displayWidth(context) * 0.9,
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.change_circle_outlined),
+                          SizedBox(
+                            width: displayWidth(context) * 0.02,
+                          ),
+                          Text('Change Mentee'),
+                        ],
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                            foregroundColor: Color(0xffA8A8B0)),
+                        onPressed: () {
+                          // show mentee change popup
+                        },
+                        child: Text('123456A Kim mentee'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-        body: Container(
-          color: Colors.grey[200],
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: displayWidth(context) * 0.9,
-                color: Colors.white,
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Name'),
-                        TextButton(
-                          onPressed: () {
-                            // show name edit popup
-                          },
-                          child: Text('Edit'),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.notifications),
-                        Text('Notification Settings'),
-                        CupertinoSwitch(
-                          value: true,
-                          onChanged: (value) {
-                            // toggle notifications on/off
-                          },
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.palette),
-                        Text('Category'),
-                        TextButton(
-                          onPressed: () {
-                            // show category setting popup
-                          },
-                          child: Text('Setting'),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.access_time),
-                        Text('Set Start Time for Weekly Timetable'),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text('Start Time'),
-                        SizedBox(width: 8),
-                        CupertinoButton(
-                          onPressed: () {
-                            // show start time picker
-                          },
-                          child: Text('12:00AM'),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text('End Time'),
-                        SizedBox(width: 8),
-                        CupertinoButton(
-                          onPressed: () {
-                            // show end time picker
-                          },
-                          child: Text('6:00PM'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 16),
-              Container(
-                color: Colors.white,
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.person),
-                        Text('User Code'),
-                        TextButton(
-                          onPressed: () {
-                            // show user code information
-                          },
-                          child: Text('123456A'),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.compare_arrows),
-                        Text('Change Version'),
-                        TextButton(
-                          onPressed: () {
-                            // show version change popup
-                          },
-                          child: Text('Mento'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 16),
-              Container(
-                color: Colors.white,
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.compare_arrows),
-                        Text('Change Mentee'),
-                        TextButton(
-                          onPressed: () {
-                            // show mentee change popup
-                          },
-                          child: Text('123456A Kim mentee'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ));
+      ),
+    ));
   }
 }
