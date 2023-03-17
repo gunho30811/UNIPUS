@@ -37,12 +37,13 @@ class Box1 extends StatelessWidget {
             onPressed: () {
               showDialog(
                 context: context,
+                barrierDismissible: true,
                 builder: (BuildContext context) {
                   return CustomPopup(); // CustomPopup 클래스를 사용하여 팝업 표시
                 },
               );
             },
-            child: Text(buttonName!),
+            child: Text(buttonName),
           ),
         ],
       ),

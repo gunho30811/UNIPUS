@@ -10,6 +10,7 @@ class CustomPopup extends StatelessWidget {
         children: [
           Text('Popup Title'),
           IconButton(
+            splashRadius: 1, // 원형 터치효과 삭제
             icon: Icon(Icons.close),
             onPressed: () {
               Navigator.of(context).pop();
