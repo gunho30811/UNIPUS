@@ -7,10 +7,12 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         backgroundColor: Color(0xffF2F2F7),
         body: SingleChildScrollView(
           child: Container(
+            height: screenHeight * 0.5,
             width: displayWidth(context) * 1,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
