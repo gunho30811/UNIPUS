@@ -15,42 +15,6 @@ class Authentication extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<String?> login(LoginData data) async {
-  //   try {
-  //     final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-  //       email: data.name,
-  //       password: data.password,
-  //     );
-  //     setUser(userCredential.user);
-  //     return null;
-  //   } on FirebaseAuthException catch (e) {
-  //     return e.message;
-  //   }
-  // }
-  //
-  // Future<String?> signUp(LoginData data) async {
-  //   try {
-  //     final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-  //       email: data.name,
-  //       password: data.password,
-  //     );
-  //     setUser(userCredential.user);
-  //     return null;
-  //   } on FirebaseAuthException catch (e) {
-  //     return e.message;
-  //   }
-  // }
-
-
-
-
-
-
-
-
-
-
-
   Future<User?> signIn(String email, String password) async {//로그인
     try {
       final UserCredential result = await _auth.signInWithEmailAndPassword(
