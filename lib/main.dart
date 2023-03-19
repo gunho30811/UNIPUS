@@ -1,6 +1,9 @@
 import 'package:chur/src/home.dart';
+import 'package:chur/src/provider/authentication.dart';
+import 'package:chur/src/ui/authentication/loginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -8,6 +11,7 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(MyApp());
 }
 
@@ -16,13 +20,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ChangeNotifierProvider(
+      create: (_) => Authentication(),
+      child: MaterialApp(
+        title: 'My App',
+        home: LoginScreen(),
       ),
-      home: Home(),
     );
   }
 }

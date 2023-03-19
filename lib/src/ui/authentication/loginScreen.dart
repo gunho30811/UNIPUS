@@ -1,60 +1,83 @@
+import 'package:chur/src/provider/authentication.dart';
+import 'package:chur/src/ui/timetable/calender.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'dashboard_screen.dart';
+import 'package:provider/provider.dart';
+
+import '../../home.dart';
 
 const users = const {
   'dribbble@gmail.com': '12345',
   'hunter@gmail.com': 'hunter',
 };
 
-class Login extends StatelessWidget {
-  Login({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  static const routeName = '/login';
 
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   Duration get loginTime => Duration(milliseconds: 2250);
 
-  Future<String?> _authUser(LoginData data) {
-    debugPrint('Name: ${data.name}, Password: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(data.name)) {
-        return 'User not exists';
-      }
-      if (users[data.name] != data.password) {
-        return 'Password does not match';
+  Future<String?> _authUser(LoginData data) async {
+    try {
+      final user = await Provider.of<Authentication>(context, listen: false)
+          .signIn(data.name, data.password);
+      if (user == null) {
+        return '로그인에 실패했습니다.';
       }
       return null;
-    });
+    } catch (e) {
+      print(e);
+      return '로그인에 실패했습니다.';
+    }
   }
 
-  Future<String?> _signupUser(LoginData data) {
-    debugPrint('Signup Name: ${data.name}, Password: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      return null;
-    });
-  }
 
-  Future<String?> _recoverPassword(String name) {
-    debugPrint('Name: $name');
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(name)) {
-        return 'User not exists';
+  Future<String?> _registerUser(LoginData data) async {
+    try {
+      final user = await Provider.of<Authentication>(context, listen: false)
+          .register(data.name, data.password);
+      if (user == null) {
+        return '회원가입에 실패했습니다.';
       }
       return null;
-    });
+    } catch (e) {
+      print(e);
+      return '회원가입에 실패했습니다.';
+    }
   }
+
+  // Future<String?> _recoverPassword(String name) {
+  //   return null;
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return FlutterLogin(
-      title: 'ECORP',
-      logo: 'assets/images/test.jpg',
-      onLogin: _authUser,
-      onSignup: _signupUser,
-      onSubmitAnimationCompleted: () {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => DashboardScreen(),
-        ));
-      },
-      onRecoverPassword: _recoverPassword,
+    return Scaffold(
+      body: FlutterLogin(
+        title: 'Fireauth Demo',
+        logo: 'assets/images/test.jpg',
+        onLogin: _authUser,
+        onSignup: _registerUser,
+        onSubmitAnimationCompleted: () {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => Home(),
+            ),
+          );
+        },
+        onRecoverPassword: (String ) {  },
+        //onRecoverPassword: _recoverPassword,
+      ),
     );
   }
 }
+
+
+
+

@@ -30,7 +30,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   static List<Widget> _widgetOptions = <Widget>[
-    Login(),
+    Calendar(),
     Calendar(),
     SettingHome(),
     SettingHome(),
