@@ -182,26 +182,83 @@ class SettingHome extends StatelessWidget {
                           subject: '주간시간표 시간 설정',
                           subjectTextStyle:
                               TextStyle(fontSize: 15, color: Colors.black)),
+                      SizedBox(
+                        width: screenWidth * 0.9,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  builder: (BuildContext context) {
+                                    return CustomPopup(); // CustomPopup 클래스를 사용하여 팝업 표시
+                                  },
+                                );
+                              },
+                              child: Text('시작시간 12:00', style: TextStyle(fontSize: 15, color: Color(0xffA8A8B0))),
+                              style: ButtonStyle(
+                                overlayColor: MaterialStateProperty.all(Colors.transparent),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  builder: (BuildContext context) {
+                                    return CustomPopup(); // CustomPopup 클래스를 사용하여 팝업 표시
+                                  },
+                                );
+                              },
+                              child: Text('마감시간 12:00', style: TextStyle(fontSize: 15, color: Color(0xffA8A8B0))),
+                              style: ButtonStyle(
+                                overlayColor: MaterialStateProperty.all(Colors.transparent),
+                              ),
+                            ),
+                            SizedBox(
+                              height: screenHeight * 0.02,
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 SizedBox(
-                  height: screenHeight * 0.02,
+                  height: screenHeight * 0.03,
                 ),
                 WhiteBox(
                   child: Column(
                     children: [
                       BoxPopup(
-                          icon: Icon(Icons.person_outlined),
-                          subject: '유저코드',
-                          subjectTextStyle:
-                              TextStyle(fontSize: 15, color: Colors.black),
+                        icon: Icon(Icons.person_outlined),
+                        subject: '유저코드',
+                        subjectTextStyle:
+                            TextStyle(fontSize: 15, color: Colors.black),
                         buttonName: 'SWR3079653',
                       ),
                       CustomDivider(),
-
+                      BoxPopup(
+                        icon: Icon(Icons.published_with_changes_outlined),
+                        subject: '버전 변경하기',
+                        subjectTextStyle:
+                            TextStyle(fontSize: 15, color: Colors.black),
+                        buttonName: 'Mento',
+                      ),
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: screenHeight * 0.03,
+                ),
+                WhiteBox(child: BoxPopup(
+                  icon: Icon(Icons.change_circle_outlined),
+                  subject: '멘티 변경하기',
+                  subjectTextStyle: TextStyle(fontSize: 15, color: Colors.black),
+                  buttonName: '김00',
+                ),
                 ),
               ],
             ),
