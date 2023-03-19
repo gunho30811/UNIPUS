@@ -7,12 +7,15 @@ class BoxPopup extends StatelessWidget {
   final String subject; // 변수 이름 수정
   final String? buttonName; // 변수 이름 수정
   final TextStyle subjectTextStyle;
+  final Widget Function(BuildContext)? buildPopup;
 
   const BoxPopup({
     this.icon,
     required this.subject,
     this.buttonName,
     required this.subjectTextStyle,
+    this.buildPopup,
+
     Key? key,
   }) : super(key: key);
 
@@ -47,7 +50,22 @@ class BoxPopup extends StatelessWidget {
                   context: context,
                   barrierDismissible: true,
                   builder: (BuildContext context) {
-                    return CustomPopup(); // CustomPopup 클래스를 사용하여 팝업 표시
+                    if (buildPopup != null) {
+                      return buildPopup!(context); // CustomPopup 클래스를 사용하여 팝업 표시
+                    } else {
+                      return AlertDialog(
+                        title: Text('Default Popup'),
+                        content: Text('This is the default popup content.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('Close'),
+                          ),
+                        ],
+                      );
+                    }
                   },
                 );
               },
@@ -133,6 +151,9 @@ class SettingHome extends StatelessWidget {
                             fontSize: 20,
                             color: Colors.black,
                             fontWeight: FontWeight.bold),
+                        buildPopup: (BuildContext) {
+                          return NameEdit();
+                        }
                       ),
                       CustomDivider(),
                       Container(
@@ -197,9 +218,12 @@ class SettingHome extends StatelessWidget {
                                   },
                                 );
                               },
-                              child: Text('시작시간 12:00', style: TextStyle(fontSize: 15, color: Color(0xffA8A8B0))),
+                              child: Text('시작시간 12:00',
+                                  style: TextStyle(
+                                      fontSize: 15, color: Color(0xffA8A8B0))),
                               style: ButtonStyle(
-                                overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                overlayColor: MaterialStateProperty.all(
+                                    Colors.transparent),
                               ),
                             ),
                             TextButton(
@@ -212,9 +236,12 @@ class SettingHome extends StatelessWidget {
                                   },
                                 );
                               },
-                              child: Text('마감시간 12:00', style: TextStyle(fontSize: 15, color: Color(0xffA8A8B0))),
+                              child: Text('마감시간 12:00',
+                                  style: TextStyle(
+                                      fontSize: 15, color: Color(0xffA8A8B0))),
                               style: ButtonStyle(
-                                overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                overlayColor: MaterialStateProperty.all(
+                                    Colors.transparent),
                               ),
                             ),
                             SizedBox(
@@ -253,12 +280,14 @@ class SettingHome extends StatelessWidget {
                 SizedBox(
                   height: screenHeight * 0.03,
                 ),
-                WhiteBox(child: BoxPopup(
-                  icon: Icon(Icons.change_circle_outlined),
-                  subject: '멘티 변경하기',
-                  subjectTextStyle: TextStyle(fontSize: 15, color: Colors.black),
-                  buttonName: '김00',
-                ),
+                WhiteBox(
+                  child: BoxPopup(
+                    icon: Icon(Icons.change_circle_outlined),
+                    subject: '멘티 변경하기',
+                    subjectTextStyle:
+                        TextStyle(fontSize: 15, color: Colors.black),
+                    buttonName: '김00',
+                  ),
                 ),
               ],
             ),
