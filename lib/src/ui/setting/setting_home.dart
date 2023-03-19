@@ -15,7 +15,6 @@ class BoxPopup extends StatelessWidget {
     this.buttonName,
     required this.subjectTextStyle,
     this.buildPopup,
-
     Key? key,
   }) : super(key: key);
 
@@ -51,11 +50,15 @@ class BoxPopup extends StatelessWidget {
                   barrierDismissible: true,
                   builder: (BuildContext context) {
                     if (buildPopup != null) {
-                      return buildPopup!(context); // CustomPopup 클래스를 사용하여 팝업 표시
+                      return buildPopup!(context);
                     } else {
                       return AlertDialog(
-                        title: Text('Default Popup'),
-                        content: Text('This is the default popup content.'),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        contentPadding: EdgeInsets.all(20),
+                        title: Text(subject, style: TextStyle(fontWeight: FontWeight.bold),),
+                        content: Text(buttonName!),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -69,8 +72,10 @@ class BoxPopup extends StatelessWidget {
                   },
                 );
               },
-              child: Text(buttonName!,
-                  style: TextStyle(fontSize: 15, color: Color(0xffA8A8B0))),
+              child: Text(
+                buttonName!,
+                style: TextStyle(fontSize: 15, color: Color(0xffA8A8B0)),
+              ),
               style: ButtonStyle(
                 overlayColor: MaterialStateProperty.all(Colors.transparent),
               ),
@@ -131,8 +136,11 @@ class SettingHome extends StatelessWidget {
             width: screenWidth * 1,
             child: Column(
               children: [
+                SizedBox(
+                  height: screenHeight * 0.01,
+                ),
                 BoxPopup(
-                    icon: Icon(Icons.settings),
+                    icon: Icon(Icons.settings, size: 30,),
                     subject: '설정하기',
                     subjectTextStyle: TextStyle(
                         fontSize: 25,
@@ -151,9 +159,7 @@ class SettingHome extends StatelessWidget {
                             fontSize: 20,
                             color: Colors.black,
                             fontWeight: FontWeight.bold),
-                        buildPopup: (BuildContext) {
-                          return NameEdit();
-                        }
+                        buildPopup: (BuildContext context) => NameEdit(),
                       ),
                       CustomDivider(),
                       Container(
@@ -196,54 +202,23 @@ class SettingHome extends StatelessWidget {
                         buttonName: '설정',
                         subjectTextStyle:
                             TextStyle(fontSize: 15, color: Colors.black),
+                        buildPopup: (BuildContext context) =>
+                            CategoryListPopup(),
                       ),
                       CustomDivider(),
                       BoxPopup(
-                          icon: Icon(Icons.access_time),
-                          subject: '주간시간표 시간 설정',
-                          subjectTextStyle:
-                              TextStyle(fontSize: 15, color: Colors.black)),
+                        icon: Icon(Icons.access_time),
+                        subject: '주간시간표 시간 설정',
+                        subjectTextStyle:
+                            TextStyle(fontSize: 15, color: Colors.black),
+                      ),
                       SizedBox(
                         width: screenWidth * 0.9,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            TextButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible: true,
-                                  builder: (BuildContext context) {
-                                    return CustomPopup(); // CustomPopup 클래스를 사용하여 팝업 표시
-                                  },
-                                );
-                              },
-                              child: Text('시작시간 12:00',
-                                  style: TextStyle(
-                                      fontSize: 15, color: Color(0xffA8A8B0))),
-                              style: ButtonStyle(
-                                overlayColor: MaterialStateProperty.all(
-                                    Colors.transparent),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible: true,
-                                  builder: (BuildContext context) {
-                                    return CustomPopup(); // CustomPopup 클래스를 사용하여 팝업 표시
-                                  },
-                                );
-                              },
-                              child: Text('마감시간 12:00',
-                                  style: TextStyle(
-                                      fontSize: 15, color: Color(0xffA8A8B0))),
-                              style: ButtonStyle(
-                                overlayColor: MaterialStateProperty.all(
-                                    Colors.transparent),
-                              ),
-                            ),
+                            TimePickerButton(),
+                            TimePickerButton1(),
                             SizedBox(
                               height: screenHeight * 0.02,
                             ),
@@ -273,6 +248,10 @@ class SettingHome extends StatelessWidget {
                         subjectTextStyle:
                             TextStyle(fontSize: 15, color: Colors.black),
                         buttonName: 'Mento',
+                        buildPopup: (BuildContext context) =>
+                            VersionSelectPopup(
+                                categories: ['menti', 'mento', 'single'],
+                                selectedCategory: 'mento'),
                       ),
                     ],
                   ),
@@ -287,6 +266,10 @@ class SettingHome extends StatelessWidget {
                     subjectTextStyle:
                         TextStyle(fontSize: 15, color: Colors.black),
                     buttonName: '김00',
+                    buildPopup: (BuildContext context) =>
+                        VersionSelectPopup(
+                            categories: ['김00', '박00', '이00'],
+                            selectedCategory: '김00'),
                   ),
                 ),
               ],
