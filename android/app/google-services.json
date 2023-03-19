@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1094286022489",
+    "project_id": "chur-103fc",
+    "storage_bucket": "chur-103fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094286022489:android:7f8b9cdbc5e16787275e48",
+        "android_client_info": {
+          "package_name": "com.example.chur"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094286022489-455uo8c3si3qidc5b369rmn13oed8pi6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR-fcs9mZTCqnL-nY_tEAla_oCrj7HBbQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094286022489-455uo8c3si3qidc5b369rmn13oed8pi6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
