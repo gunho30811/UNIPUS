@@ -1,50 +1,61 @@
 import 'package:chur/src/ui/setting/popup.dart';
 import 'package:flutter/material.dart';
 
-class Box1 extends StatelessWidget {
-  final Widget icon; // 변수 이름 수정
+class BoxPopup extends StatelessWidget {
+  final Widget? icon; // 변수 이름 수정
   final String subject; // 변수 이름 수정
-  final String buttonName; // 변수 이름 수정
+  final String? buttonName; // 변수 이름 수정
+  final TextStyle subjectTextStyle;
 
-  const Box1({
-    required this.icon,
+  const BoxPopup({
+    this.icon,
     required this.subject,
-    required this.buttonName,
+    this.buttonName,
+    required this.subjectTextStyle,
     Key? key,
   }) : super(key: key);
 
-  double displayWidth(BuildContext context) =>
-      MediaQuery.of(context).size.width; // displayWidth 함수 추가
-
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      width: displayWidth(context) * 0.9,
-      padding: EdgeInsets.symmetric(horizontal: displayWidth(context) * 0.02),
+      width: screenWidth * 0.9,
+      height: screenHeight * 0.07,
+      padding: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.01, vertical: screenHeight * 0.01),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             children: [
-              icon,
+              icon ?? const SizedBox.shrink(),
               const SizedBox(
-                width: 5,
+                width: 15,
               ),
-              Text(subject),
+              Text(
+                subject,
+                style: subjectTextStyle,
+              ),
             ],
           ),
-          TextButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                barrierDismissible: true,
-                builder: (BuildContext context) {
-                  return CustomPopup(); // CustomPopup 클래스를 사용하여 팝업 표시
-                },
-              );
-            },
-            child: Text(buttonName),
-          ),
+          if (buttonName != null)
+            TextButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) {
+                    return CustomPopup(); // CustomPopup 클래스를 사용하여 팝업 표시
+                  },
+                );
+              },
+              child: Text(buttonName!,
+                  style: TextStyle(fontSize: 15, color: Color(0xffA8A8B0))),
+              style: ButtonStyle(
+                overlayColor: MaterialStateProperty.all(Colors.transparent),
+              ),
+            ),
         ],
       ),
     );
