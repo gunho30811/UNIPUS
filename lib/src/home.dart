@@ -1,7 +1,6 @@
 import 'package:chur/src/provider/home_provider.dart';
 import 'package:chur/src/ui/authentication/loginScreen.dart';
 import 'package:chur/src/ui/setting/setting_home.dart';
-import 'package:chur/src/ui/setting/setting_main.dart';
 import 'package:chur/src/ui/timetable/calender.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Login(),
     Calendar(),
     SettingHome(),
-    SettingsScreen(),
+    SettingHome(),
   ];
 
   @override
