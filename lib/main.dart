@@ -1,6 +1,4 @@
-import 'package:chur/src/ui/setting/setting_home.dart';
-import 'package:chur/src/ui/setting/setting_main.dart';
-import 'package:chur/src/ui/timetable/calender.dart';
+import 'package:chur/src/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SettingHome(),
+      home: Home(),
     );
   }
 }
