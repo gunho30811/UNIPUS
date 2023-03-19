@@ -61,3 +61,39 @@ class BoxPopup extends StatelessWidget {
     );
   }
 }
+
+class WhiteBox extends StatelessWidget {
+  final Widget child;
+
+  const WhiteBox({
+    required this.child,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
+      width: screenWidth * 0.9,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: child, // child를 사용하여 원하는 위젯을 내부에 배치
+    );
+  }
+}
+
+class CustomDivider extends StatelessWidget {
+  const CustomDivider({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Divider(
+      height: 1, // set the height of the line
+      thickness: 1, // set the thickness of the line
+      color: Colors.grey[300], // set the color of the line
+    );
+  }
+}

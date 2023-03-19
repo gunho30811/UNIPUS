@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'box.dart';
 
@@ -22,14 +23,10 @@ class SettingHome extends StatelessWidget {
                         fontSize: 25,
                         color: Colors.black,
                         fontWeight: FontWeight.bold)),
-                SizedBox(height: screenHeight * 0.01,),
-                Container(
-                  padding: EdgeInsets.all(screenWidth * 0.02),
-                  width: screenWidth * 0.9,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
+                SizedBox(
+                  height: screenHeight * 0.01,
+                ),
+                WhiteBox(
                   child: Column(
                     children: [
                       BoxPopup(
@@ -40,28 +37,69 @@ class SettingHome extends StatelessWidget {
                             color: Colors.black,
                             fontWeight: FontWeight.bold),
                       ),
-                      Divider(
-                        height: 1, // set the height of the line
-                        thickness: 1, // set the thickness of the line
-                        color: Colors.grey[300], // set the color of the line
+                      CustomDivider(),
+                      Container(
+                        height: screenHeight * 0.07,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.01,
+                            vertical: screenHeight * 0.01),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.notifications_none_outlined),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  '알림설정',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                            CupertinoSwitch(
+                              value: true,
+                              activeColor: Color(0xff34C759),
+                              // set the thumb color to blue
+                              trackColor: Colors.grey[300],
+                              // set the track color to light grey
+                              onChanged: (value) {
+                                // toggle notifications on/off
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                      BoxPopup(
-                          icon: Icon(Icons.notifications_none_outlined),
-                          subject: '알림 설정',
-                          subjectTextStyle:
-                              TextStyle(fontSize: 15, color: Colors.black)),
-                      Divider(
-                        height: 1, // set the height of the line
-                        thickness: 1, // set the thickness of the line
-                        color: Colors.grey[300], // set the color of the line
-                      ),
+                      CustomDivider(),
                       BoxPopup(
                         icon: Icon(Icons.palette_outlined),
-                        subject: 'Example Subject',
-                        buttonName: 'Click me',
+                        subject: '카테고리 설정',
+                        buttonName: '설정',
                         subjectTextStyle:
                             TextStyle(fontSize: 15, color: Colors.black),
                       ),
+                      CustomDivider(),
+                      BoxPopup(
+                          icon: Icon(Icons.access_time),
+                          subject: '주간시간표 시간 설정',
+                          subjectTextStyle:
+                              TextStyle(fontSize: 15, color: Colors.black)),
+                    ],
+                  ),
+                ),
+                WhiteBox(
+                  child: Column(
+                    children: [
+                      BoxPopup(
+                          icon: Icon(Icons.person_outlined),
+                          subject: '유저코드',
+                          subjectTextStyle:
+                              TextStyle(fontSize: 15, color: Colors.black),
+                        buttonName: 'SWR3079653',
+                      ),
+                      CustomDivider(),
+
                     ],
                   ),
                 ),
