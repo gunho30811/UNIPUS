@@ -1,6 +1,6 @@
-import 'package:chur/src/home.dart';
 import 'package:chur/src/provider/authentication.dart';
-import 'package:chur/src/ui/authentication/loginScreen.dart';
+import 'package:chur/src/ui/my_list/my_list_home.dart';
+import 'package:chur/src/ui/setting/setting_home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       create: (_) => Authentication(),
       child: MaterialApp(
         title: 'My App',
-        home: LoginScreen(),
+        home: SettingHome(),
       ),
     );
   }
