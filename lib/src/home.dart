@@ -1,5 +1,6 @@
 import 'package:chur/src/provider/home_provider.dart';
 import 'package:chur/src/ui/authentication/loginScreen.dart';
+import 'package:chur/src/ui/my_list/my_list_home.dart';
 import 'package:chur/src/ui/setting/setting_home.dart';
 import 'package:chur/src/ui/timetable/calender.dart';
 import 'package:flutter/material.dart';
@@ -28,19 +29,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   static List<Widget> _widgetOptions = <Widget>[
     Calendar(),
     Calendar(),
     SettingHome(),
-    SettingHome(),
+    MyListHome(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Consumer<HomeProvider>(
-        builder: (context, provider, child) => _widgetOptions[provider.currentIndex],
+        builder: (context, provider, child) =>
+            _widgetOptions[provider.currentIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

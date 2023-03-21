@@ -1,3 +1,4 @@
+import 'package:chur/src/home.dart';
 import 'package:chur/src/provider/authentication.dart';
 import 'package:chur/src/ui/my_list/my_list_home.dart';
 import 'package:chur/src/ui/setting/setting_home.dart';
@@ -6,7 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       create: (_) => Authentication(),
       child: MaterialApp(
         title: 'My App',
-        home: SettingHome(),
+        home: Home(),
       ),
     );
   }
