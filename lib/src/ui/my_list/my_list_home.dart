@@ -67,69 +67,53 @@ class _MyListHomeState extends State<MyListHome> {
     final screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        body: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              backgroundColor: Color(0xffF2F2F7), // 배경 색상 설정
-              floating: true, // SliverAppBar를 floating 모드로 설정
-              pinned: false,
-              snap: false,
-              expandedHeight: screenHeight * 0.15,
-              title: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
+        body: Column(
+          children: [
+            Container(
+              height: screenHeight * 0.15,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(height: 10),
+                  Text(
+                    Month,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(height: 10),
-                    Text(
-                      Month,
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
+                  SizedBox(height: 10),
+                  SizedBox(
+                    width: screenWidth * 0.85,
+                    child: Divider(
+                      height: 1,
                       color: Colors.black,
-                      height: screenHeight * 1.5,
-                      width: screenWidth * 0.85,
                     ),
-                    SizedBox(height: 10),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          ...List.generate(
-                            dates.length,
-                            (index) => DayButton(
-                              text: dates[index],
-                              onPressed: () => _handleDayButtonPressed(index),
-                              isSelected: index == _selectedDayIndex,
-                            ),
-                          ),
-                        ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ...List.generate(
+                        dates.length,
+                        (index) => DayButton(
+                          text: dates[index],
+                          onPressed: () => _handleDayButtonPressed(index),
+                          isSelected: index == _selectedDayIndex,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            SliverPadding(
-              padding: EdgeInsets.only(top: 10, bottom: 20),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return ListTile(
-                      title: Text('Item $index'),
-                    );
-                  },
-                  childCount: 100,
-                ),
-              ),
+            Container(
+              color: Colors.black,
+              height: screenHeight * 0.1,
             ),
           ],
         ),
