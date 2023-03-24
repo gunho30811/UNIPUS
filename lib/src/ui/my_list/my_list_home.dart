@@ -111,12 +111,24 @@ class _MyListHomeState extends State<MyListHome> {
                 ],
               ),
             ),
-            Container(
-              color: Colors.black,
-              height: screenHeight * 0.1,
-            ),
+            MyList(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MyList extends StatelessWidget {
+  const MyList({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      width: 350,
+      decoration: BoxDecoration(
+        color: Color(0xffffffffff),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
     );
   }
