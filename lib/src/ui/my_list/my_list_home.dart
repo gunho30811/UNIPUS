@@ -111,7 +111,47 @@ class _MyListHomeState extends State<MyListHome> {
                 ],
               ),
             ),
-            MyList(),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+                width: screenWidth * 0.95,
+                decoration: BoxDecoration(
+                  color: Color(0xffFEF8EC),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          '12.22.Thr',
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        MyList(),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      width: screenWidth * 0.15,
+                      height: screenHeight * 0.7,
+                      color: Colors.white,
+                    ),
+                  ],
+                )),
           ],
         ),
       ),
@@ -125,11 +165,122 @@ class MyList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 100,
-      width: 350,
+      width: 250,
       decoration: BoxDecoration(
-        color: Color(0xffffffffff),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 1,
+            offset: Offset(0, 3),
+          ),
+        ],
+        color: Color(0xffffffff),
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
+      child: Row(
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+          ),
+          Container(
+            height: 80,
+            width: 10,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1,
+                  blurRadius: 1,
+                  offset: Offset(0, 3),
+                ),
+              ],
+              color: Color(0xffFFC93C),
+            ),
+          ),
+          Container(
+            child: Column(
+              children: [
+                Text(
+                  '영단어 암기',
+                  style: TextStyle(fontSize: 20, color: Colors.grey),
+                ),
+                Text(
+                  'p145 ~ p165',
+                  style: TextStyle(fontSize: 10, color: Colors.grey),
+                ),
+              ],
+            ),
+          ),
+          CustomCircleButtons(),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomCircleButtons extends StatefulWidget {
+  @override
+  _CustomCircleButtonsState createState() => _CustomCircleButtonsState();
+}
+
+class _CustomCircleButtonsState extends State<CustomCircleButtons> {
+  int _selectedButton = -1;
+
+  List<Color> _buttonColors = [
+    Color(0xffF16538),
+    Color(0xffFFB13D),
+    Color(0xff9CE861),
+  ];
+
+  void _onButtonPressed(int index) {
+    setState(() {
+      _selectedButton = index;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Button $_selectedButton selected'),
+        duration: Duration(seconds: 1),
+      ),
+    );
+  }
+
+  Widget _buildCircleButton(int index) {
+    return GestureDetector(
+      onTap: () => _onButtonPressed(index),
+      child: Container(
+        width: 20,
+        height: 20,
+        decoration: BoxDecoration(
+          color: _selectedButton == index ? _buttonColors[index] : Colors.grey,
+          shape: BoxShape.circle,
+        ),
+        child: _selectedButton == index
+            ? Center(
+                child: Icon(
+                  Icons.check,
+                  size: 15,
+                  color: Colors.white,
+                ),
+              )
+            : null,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildCircleButton(0),
+        SizedBox(height: 10),
+        _buildCircleButton(1),
+        SizedBox(height: 10),
+        _buildCircleButton(2),
+      ],
     );
   }
 }
