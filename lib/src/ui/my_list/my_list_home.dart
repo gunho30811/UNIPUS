@@ -164,8 +164,8 @@ class MyList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      width: 250,
+      height: 80,
+      width: 300,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -179,29 +179,36 @@ class MyList extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Align(
             alignment: Alignment.centerLeft,
           ),
-          Container(
-            height: 80,
-            width: 10,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1,
-                  blurRadius: 1,
-                  offset: Offset(0, 3),
-                ),
-              ],
-              color: Color(0xffFFC93C),
+          SizedBox(
+            child: Container(
+              height: 65,
+              width: 7,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 1,
+                    blurRadius: 1,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+                color: Color(0xffFFC93C),
+              ),
             ),
           ),
           Container(
+            width: 250,
             child: Column(
               children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                ),
                 Text(
                   '영단어 암기',
                   style: TextStyle(fontSize: 20, color: Colors.grey),
@@ -228,10 +235,16 @@ class CustomCircleButtons extends StatefulWidget {
 class _CustomCircleButtonsState extends State<CustomCircleButtons> {
   int _selectedButton = -1;
 
+  List<String> _buttonNames = [
+    'Execellent!',
+    'Good!',
+    'Bad!',
+  ];
+
   List<Color> _buttonColors = [
-    Color(0xffF16538),
-    Color(0xffFFB13D),
     Color(0xff9CE861),
+    Color(0xffFFB13D),
+    Color(0xffF16538),
   ];
 
   void _onButtonPressed(int index) {
@@ -241,7 +254,20 @@ class _CustomCircleButtonsState extends State<CustomCircleButtons> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Button $_selectedButton selected'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        backgroundColor: Colors.white,
+        content: FractionallySizedBox(
+          widthFactor: 0.3,
+          child: Center(
+            child: Text(
+              '${_buttonNames[_selectedButton]}',
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+            ),
+          ),
+        ),
         duration: Duration(seconds: 1),
       ),
     );
