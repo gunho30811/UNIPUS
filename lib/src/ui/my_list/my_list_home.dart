@@ -77,8 +77,8 @@ class _MyListHomeState extends State<MyListHome> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30),
                     ),
                   ),
                   child: Column(
@@ -113,7 +113,7 @@ class _MyListHomeState extends State<MyListHome> {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Expanded(
                   child: Container(
@@ -187,10 +187,45 @@ class _MyListHomeState extends State<MyListHome> {
                           SizedBox(
                             width: 10,
                           ),
-                          Container(
-                            width: screenWidth * 0.15,
-                            height: screenHeight * 0.7,
-                            color: Colors.white,
+                          SingleChildScrollView(
+                            physics: NeverScrollableScrollPhysics(),
+                            child: Container(
+                              width: screenWidth * 0.15,
+                              height: screenHeight * 0.6,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('00시'),
+                                  Container(
+                                    height: (screenHeight * 0.6 - 50) / 8 * 6,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        for (var i = 1; i <= 6; i++)
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                '${i * 3}시',
+                                                style: TextStyle(fontSize: 12),
+                                              ),
+                                              Container(
+                                                height: 2,
+                                                width: 20,
+                                                color: Colors.grey,
+                                              ),
+                                            ],
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                  Text('24시'),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       )),
