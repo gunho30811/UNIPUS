@@ -69,39 +69,39 @@ class _CalendarState extends State<Calendar> {
         ],
       ),
       body: Column(
-          children: [
-      TableCalendar(
-      firstDay: DateTime.utc(2010, 10, 16),
-      lastDay: DateTime.utc(2030, 3, 14),
-      focusedDay: _focusedDay,
-      calendarFormat: _calendarFormat,
-      onFormatChanged: (format) {
-        if (_calendarFormat != format) {
-          setState(() {
-            _calendarFormat = format;
-          });
-        }
-      },
-      onPageChanged: (focusedDay) {
-        _focusedDay = focusedDay;
-      },
-      selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-      onDaySelected: _onDaySelected,
-      eventLoader: _getEventsForDay,
-    ),
-            const SizedBox(height: 8.0),
-            Expanded(
-              child: ListView(
-                children: _selectedDay != null
-                    ? _getEventsForDay(_selectedDay!).map((event) {
-                  return ListTile(
-                    title: Text(event),
-                  );
-                }).toList()
-                    : [],
-              ),
+        children: [
+          TableCalendar(
+            firstDay: DateTime.utc(2010, 10, 16),
+            lastDay: DateTime.utc(2030, 3, 14),
+            focusedDay: _focusedDay,
+            calendarFormat: _calendarFormat,
+            onFormatChanged: (format) {
+              if (_calendarFormat != format) {
+                setState(() {
+                  _calendarFormat = format;
+                });
+              }
+            },
+            onPageChanged: (focusedDay) {
+              _focusedDay = focusedDay;
+            },
+            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+            onDaySelected: _onDaySelected,
+            eventLoader: _getEventsForDay,
+          ),
+          const SizedBox(height: 8.0),
+          Expanded(
+            child: ListView(
+              children: _selectedDay != null
+                  ? _getEventsForDay(_selectedDay!).map((event) {
+                return ListTile(
+                  title: Text(event),
+                );
+              }).toList()
+                  : [],
             ),
-          ],
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
