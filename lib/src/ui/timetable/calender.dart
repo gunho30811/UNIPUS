@@ -20,6 +20,15 @@ class _CalendarState extends State<Calendar> {
     _calendarFormat = CalendarFormat.month;
     _focusedDay = DateTime.now();
     _selectedDay = DateTime.now();
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      final height = MediaQuery.of(context).size.height;
+      if (height <= 460) {
+        setState(() {
+          _calendarFormat = CalendarFormat.week;
+        });
+      }
+    });
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
@@ -57,7 +66,10 @@ class _CalendarState extends State<Calendar> {
               for (var i = 1; i <= 12; i++)
                 PopupMenuItem(
                   value: i,
-                  child: Text("$i월"),
+                  child: Text(
+                    "$i월",
+                    textAlign: TextAlign.center,
+                  ),
                 ),
             ],
             onSelected: (value) {
@@ -71,6 +83,17 @@ class _CalendarState extends State<Calendar> {
       body: Column(
         children: [
           TableCalendar(
+            headerStyle: HeaderStyle(
+              // formatButtonVisible: false,
+              titleCentered: true,
+              leftChevronVisible: false,
+              rightChevronVisible: false,
+              titleTextStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0,
+              ),
+
+            ),
             firstDay: DateTime.utc(2010, 10, 16),
             lastDay: DateTime.utc(2030, 3, 14),
             focusedDay: _focusedDay,
