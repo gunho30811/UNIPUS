@@ -1,3 +1,4 @@
+import 'package:chur/src/ui/catbox/catbox_home.dart';
 import 'package:chur/src/ui/setting/popup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,10 @@ class BoxPopup extends StatelessWidget {
                           borderRadius: BorderRadius.circular(16),
                         ),
                         contentPadding: EdgeInsets.all(20),
-                        title: Text(subject, style: TextStyle(fontWeight: FontWeight.bold),),
+                        title: Text(
+                          subject,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         content: Text(buttonName!),
                         actions: [
                           TextButton(
@@ -82,29 +86,6 @@ class BoxPopup extends StatelessWidget {
             ),
         ],
       ),
-    );
-  }
-}
-
-class WhiteBox extends StatelessWidget {
-  final Widget child;
-
-  const WhiteBox({
-    required this.child,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
-      width: screenWidth * 0.9,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: child, // child를 사용하여 원하는 위젯을 내부에 배치
     );
   }
 }
@@ -139,17 +120,48 @@ class SettingHome extends StatelessWidget {
                 SizedBox(
                   height: screenHeight * 0.01,
                 ),
-                BoxPopup(
-                    icon: Icon(Icons.settings, size: 30,),
-                    subject: '설정하기',
-                    subjectTextStyle: TextStyle(
-                        fontSize: 25,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold)),
+                Container(
+                  width: screenWidth * 0.9,
+                  height: screenHeight * 0.07,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(children: [
+                        Icon(
+                          Icons.settings,
+                          size: 30,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          '설정하기',
+                          style: TextStyle(
+                              fontSize: 25,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ]),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CatBoxHome()),
+                            );
+                          },
+                          icon: Icon(Icons.arrow_back))
+                    ],
+                  ),
+                ),
                 SizedBox(
                   height: screenHeight * 0.01,
                 ),
-                WhiteBox(
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
+                  width: screenWidth * 0.9,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                   child: Column(
                     children: [
                       BoxPopup(
@@ -231,7 +243,13 @@ class SettingHome extends StatelessWidget {
                 SizedBox(
                   height: screenHeight * 0.03,
                 ),
-                WhiteBox(
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
+                  width: screenWidth * 0.9,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                   child: Column(
                     children: [
                       BoxPopup(
@@ -259,17 +277,22 @@ class SettingHome extends StatelessWidget {
                 SizedBox(
                   height: screenHeight * 0.03,
                 ),
-                WhiteBox(
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
+                  width: screenWidth * 0.9,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                   child: BoxPopup(
                     icon: Icon(Icons.change_circle_outlined),
                     subject: '멘티 변경하기',
                     subjectTextStyle:
                         TextStyle(fontSize: 15, color: Colors.black),
                     buttonName: '김00',
-                    buildPopup: (BuildContext context) =>
-                        VersionSelectPopup(
-                            categories: ['김00', '박00', '이00'],
-                            selectedCategory: '김00'),
+                    buildPopup: (BuildContext context) => VersionSelectPopup(
+                        categories: ['김00', '박00', '이00'],
+                        selectedCategory: '김00'),
                   ),
                 ),
               ],

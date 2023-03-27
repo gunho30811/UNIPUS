@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => Authentication(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'My App',
         home: Home(),
       ),

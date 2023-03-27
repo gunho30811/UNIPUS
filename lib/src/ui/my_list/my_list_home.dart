@@ -67,6 +67,7 @@ class _MyListHomeState extends State<MyListHome> {
     final screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Color(0xffF2F2F7),
         body: Stack(
           children: [
             Column(

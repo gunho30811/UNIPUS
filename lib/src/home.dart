@@ -1,5 +1,6 @@
 import 'package:chur/src/provider/home_provider.dart';
 import 'package:chur/src/ui/authentication/loginScreen.dart';
+import 'package:chur/src/ui/catbox/catbox_home.dart';
 import 'package:chur/src/ui/my_list/my_list_home.dart';
 import 'package:chur/src/ui/setting/setting_home.dart';
 import 'package:chur/src/ui/timetable/calender.dart';
@@ -12,6 +13,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       home: ChangeNotifierProvider(
         create: (_) => HomeProvider(),
@@ -32,8 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
   static List<Widget> _widgetOptions = <Widget>[
     Calendar(),
     Calendar(),
-    SettingHome(),
     MyListHome(),
+    CatBoxHome(),
   ];
 
   @override
