@@ -128,7 +128,9 @@ class _MyListHomeState extends State<MyListHome> {
                           ),
                         ],
                         color: Color(0xffFEF8EC),
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30)),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -146,13 +148,23 @@ class _MyListHomeState extends State<MyListHome> {
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(
-                                height: 20,
-                              ),
                               Expanded(
                                 child: SingleChildScrollView(
                                   child: Column(
                                     children: [
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      MyList(
+                                        title: '영단어 암기',
+                                        subtitle: 'p145 ~ p165',
+                                        color: Color(0xffFFC93C),
+                                      ),
+                                      MyList(
+                                        title: '영단어 암기',
+                                        subtitle: 'p145 ~ p165',
+                                        color: Color(0xffFFC93C),
+                                      ),
                                       MyList(
                                         title: '영단어 암기',
                                         subtitle: 'p145 ~ p165',
@@ -191,38 +203,77 @@ class _MyListHomeState extends State<MyListHome> {
                             physics: NeverScrollableScrollPhysics(),
                             child: Container(
                               width: screenWidth * 0.15,
-                              height: screenHeight * 0.6,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                              height: 400,
+                              child: Stack(
                                 children: [
-                                  Text('00시'),
+                                  Column(
+                                    children: [
+                                      Text('00시'),
+                                      Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: Color(0xff836A45),
+                                            width: 5,
+                                            style: BorderStyle.solid,
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        height: (screenHeight * 0.6) / 8 * 6,
+                                        width: 6,
+                                        color: Color(0xff836A45),
+                                      ),
+                                      Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: Color(0xff836A45),
+                                            width: 5,
+                                            style: BorderStyle.solid,
+                                          ),
+                                        ),
+                                      ),
+                                      Text('24시'),
+                                    ],
+                                  ),
                                   Container(
-                                    height: (screenHeight * 0.6 - 50) / 8 * 6,
-                                    child: Column(
+                                    height: 400,
+                                    child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.center,
                                       children: [
-                                        for (var i = 1; i <= 6; i++)
-                                          Row(
+                                        SizedBox(
+                                          height: 270,
+                                          child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
-                                                '${i * 3}시',
-                                                style: TextStyle(fontSize: 12),
-                                              ),
-                                              Container(
-                                                height: 2,
-                                                width: 20,
-                                                color: Colors.grey,
-                                              ),
+                                              for (var i = 1; i <= 6; i++)
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      height: 3,
+                                                      width: 10,
+                                                      color: Color(0xff836A45),
+                                                    ),
+                                                    Text(
+                                                      '${i * 3}',
+                                                      style: TextStyle(
+                                                          fontSize: 12),
+                                                    ),
+                                                  ],
+                                                ),
                                             ],
                                           ),
+                                        ),
                                       ],
                                     ),
                                   ),
-                                  Text('24시'),
                                 ],
                               ),
                             ),
@@ -232,7 +283,7 @@ class _MyListHomeState extends State<MyListHome> {
                 ),
               ],
             ),
-            CustomFloatingButton(),
+            Container(child: CustomFloatingButton()),
           ],
         ),
       ),
@@ -459,8 +510,8 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
       child: Stack(
         children: [
           Positioned(
-            bottom: 20,
-            right: 20,
+            bottom: 30,
+            right: 30,
             child: _isButtonSelected
                 ? Container(
                     decoration: BoxDecoration(
@@ -497,16 +548,135 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
                     ),
                   )
                 : SizedBox(
-                    width: 50,
-                    height: 50,
+                    width: 60,
+                    height: 60,
                     child: FloatingActionButton(
                       onPressed: _toggleButton,
-                      child: Image.asset('assets/images/Feedback.png'),
+                      child: Ink.image(
+                        image: AssetImage(
+                            'assets/images/CustomFloatingButton.png'),
+                        fit: BoxFit.cover,
+                        child: InkWell(
+                          onTap: _toggleButton,
+                        ),
+                      ),
+                      backgroundColor: Colors.white,
                     ),
                   ),
           ),
         ],
       ),
     );
+  }
+}
+
+class TimeRange {
+  final int startTime;
+  final int endTime;
+  final Color color;
+
+  TimeRange({
+    required this.startTime,
+    required this.endTime,
+    required this.color,
+  });
+}
+
+class TimeBar extends StatefulWidget {
+  final List<TimeRange> timeRanges;
+
+  TimeBar({required this.timeRanges});
+
+  @override
+  _TimeBarState createState() => _TimeBarState();
+}
+
+class _TimeBarState extends State<TimeBar> {
+  @override
+  Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    return SizedBox(
+      height: screenHeight * 0.74,
+      child: Row(
+        children: [
+          Container(
+            width: 30,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                for (var i = 0; i < 8; i++)
+                  Text(
+                    '${i * 3}시',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                SizedBox(height: 10),
+                Container(
+                  height: screenHeight * 0.55,
+                  width: 6,
+                  color: Colors.grey,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              height: screenHeight * 0.7,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 24,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    height: screenHeight * 0.7,
+                    width: 60,
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                    ),
+                    child: Stack(
+                      children: [
+                        for (final timeRange in widget.timeRanges)
+                          _buildTimeRangeBox(
+                            startTime: timeRange.startTime,
+                            endTime: timeRange.endTime,
+                            index: index,
+                            color: timeRange.color,
+                          ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTimeRangeBox({
+    required int startTime,
+    required int endTime,
+    required int index,
+    required Color color,
+  }) {
+    final int startBoxIndex = startTime ~/ 3;
+    final int endBoxIndex = (endTime - 1) ~/ 3;
+    final int boxCount = endBoxIndex - startBoxIndex + 1;
+
+    if (index >= startBoxIndex && index <= endBoxIndex) {
+      final double width = boxCount * 60.0 - (boxCount - 1) * 2.0;
+      final double left = startBoxIndex * 60.0 + (startBoxIndex - 1) * 2.0;
+
+      return Positioned(
+        left: left,
+        child: Container(
+          width: width,
+          height: double.infinity,
+          color: color,
+        ),
+      );
+    } else {
+      return SizedBox.shrink();
+    }
   }
 }
