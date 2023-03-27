@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/mylist_provider.dart';
 
 // 날짜에 대한 더미 데이터
 const String Month = 'December';
@@ -102,7 +105,7 @@ class _MyListHomeState extends State<MyListHome> {
                         children: [
                           ...List.generate(
                             dates.length,
-                            (index) => DayButton(
+                                (index) => DayButton(
                               text: dates[index],
                               onPressed: () => _handleDayButtonPressed(index),
                               isSelected: index == _selectedDayIndex,
@@ -137,65 +140,39 @@ class _MyListHomeState extends State<MyListHome> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                '12.22.Thr',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                              Expanded(
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      MyList(
-                                        title: '영단어 암기',
-                                        subtitle: 'p145 ~ p165',
-                                        color: Color(0xffFFC93C),
-                                      ),
-                                      MyList(
-                                        title: '영단어 암기',
-                                        subtitle: 'p145 ~ p165',
-                                        color: Color(0xffFFC93C),
-                                      ),
-                                      MyList(
-                                        title: '영단어 암기',
-                                        subtitle: 'p145 ~ p165',
-                                        color: Color(0xffFFC93C),
-                                      ),
-                                      MyList(
-                                        title: '영단어 암기',
-                                        subtitle: 'p145 ~ p165',
-                                        color: Color(0xffFFC93C),
-                                      ),
-                                      MyList(
-                                        title: '영단어 암기',
-                                        subtitle: 'p145 ~ p165',
-                                        color: Color(0xffFFC93C),
-                                      ),
-                                      MyList(
-                                        title: '영단어 암기',
-                                        subtitle: 'p145 ~ p165',
-                                        color: Color(0xffFFC93C),
-                                      ),
-                                      MyList(
-                                        title: '영단어 암기',
-                                        subtitle: 'p145 ~ p165',
-                                        color: Color(0xffFFC93C),
-                                      ),
-                                    ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  '12.22.Thr',
+                                  style: TextStyle(
+                                      fontSize: 20, fontWeight: FontWeight.bold),
+                                ),
+                                Expanded(
+                                  //복붙 후 프로바이더 이름 및 아이템(MyList에 해당) 만 변경
+                                  child: Consumer<MyListProvider>(//프로바이더를 사용할때 필수적인 요소 Consumer<프로바이더 이름>
+                                    builder: (context, provider, child) {//context, provider, child 고정적인 요소
+                                      return ListView.builder(
+                                        itemCount: provider.mylist.length,//아이템 갯수 -> mylist의 length(길이)
+                                        itemBuilder: (context, index) {
+                                          final mylist = provider.mylist[index];
+                                          return MyList(
+                                            title: (mylist.title),
+                                            subtitle: (mylist.subtitle),
+                                            color: Color(mylist.color),
+                                          );
+                                        },
+                                      );
+                                    },
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           SizedBox(
                             width: 10,
@@ -246,13 +223,13 @@ class _MyListHomeState extends State<MyListHome> {
                                     height: 400,
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      MainAxisAlignment.center,
                                       children: [
                                         SizedBox(
                                           height: 270,
                                           child: Column(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                             children: [
                                               for (var i = 1; i <= 6; i++)
                                                 Row(
@@ -299,9 +276,9 @@ class MyList extends StatelessWidget {
 
   const MyList(
       {Key? key,
-      required this.title,
-      required this.subtitle,
-      required this.color})
+        required this.title,
+        required this.subtitle,
+        required this.color})
       : super(key: key);
 
   @override
@@ -438,7 +415,7 @@ class _CustomCircleButtonsState extends State<CustomCircleButtons> {
             child: Text(
               '${_buttonNames[_selectedButton]}',
               style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+              TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
             ),
           ),
         ),
@@ -461,12 +438,12 @@ class _CustomCircleButtonsState extends State<CustomCircleButtons> {
         ),
         child: _selectedButton == index
             ? Center(
-                child: Icon(
-                  Icons.check,
-                  size: 15,
-                  color: Colors.white,
-                ),
-              )
+          child: Icon(
+            Icons.check,
+            size: 15,
+            color: Colors.white,
+          ),
+        )
             : null,
       ),
     );
@@ -515,55 +492,55 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
             right: 30,
             child: _isButtonSelected
                 ? Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(width: 10),
-                        IconButton(
-                          onPressed: _toggleButton,
-                          icon: Icon(Icons.close),
-                          color: Colors.grey,
-                        ),
-                        SizedBox(width: 10),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.6,
-                          child: TextFormField(
-                            controller: _textEditingController,
-                            decoration: InputDecoration(
-                              hintText: '오늘 하루 칭찬 보내기',
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.send),
-                          color: Colors.grey,
-                        ),
-                        SizedBox(width: 10),
-                      ],
-                    ),
-                  )
-                : SizedBox(
-                    width: 60,
-                    height: 60,
-                    child: FloatingActionButton(
-                      onPressed: _toggleButton,
-                      child: Ink.image(
-                        image: AssetImage(
-                            'assets/images/CustomFloatingButton.png'),
-                        fit: BoxFit.cover,
-                        child: InkWell(
-                          onTap: _toggleButton,
-                        ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(width: 10),
+                  IconButton(
+                    onPressed: _toggleButton,
+                    icon: Icon(Icons.close),
+                    color: Colors.grey,
+                  ),
+                  SizedBox(width: 10),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: TextFormField(
+                      controller: _textEditingController,
+                      decoration: InputDecoration(
+                        hintText: '오늘 하루 칭찬 보내기',
+                        border: InputBorder.none,
                       ),
-                      backgroundColor: Colors.white,
                     ),
                   ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.send),
+                    color: Colors.grey,
+                  ),
+                  SizedBox(width: 10),
+                ],
+              ),
+            )
+                : SizedBox(
+              width: 60,
+              height: 60,
+              child: FloatingActionButton(
+                onPressed: _toggleButton,
+                child: Ink.image(
+                  image: AssetImage(
+                      'assets/images/CustomFloatingButton.png'),
+                  fit: BoxFit.cover,
+                  child: InkWell(
+                    onTap: _toggleButton,
+                  ),
+                ),
+                backgroundColor: Colors.white,
+              ),
+            ),
           ),
         ],
       ),
