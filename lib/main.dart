@@ -1,6 +1,8 @@
 import 'package:chur/src/home.dart';
 import 'package:chur/src/provider/authentication.dart';
 import 'package:chur/src/provider/catbox_grade_provider.dart';
+import 'package:chur/src/provider/mylist_provider.dart';
+import 'package:chur/src/provider/mylist_timeline_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +25,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Authentication()),
+        ChangeNotifierProvider(create: (_) => TimeLineProvider()),
         ChangeNotifierProvider(create: (_) => ItemProvider()), // 수정된 부분
       ],
       child: MaterialApp(

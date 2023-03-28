@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/mylist_provider.dart';
+import '../../provider/mylist_timeline_provider.dart';
 
 // 날짜에 대한 더미 데이터
 const String Month = 'December';
@@ -68,6 +69,9 @@ class _MyListHomeState extends State<MyListHome> {
     final dates = List.generate(7, (index) => '${index + 1}');
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    final timeLineProvider = Provider.of<TimeLineProvider>(context);
+    final timeLines = timeLineProvider.items;
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xffF2F2F7),
@@ -105,7 +109,7 @@ class _MyListHomeState extends State<MyListHome> {
                         children: [
                           ...List.generate(
                             dates.length,
-                                (index) => DayButton(
+                            (index) => DayButton(
                               text: dates[index],
                               onPressed: () => _handleDayButtonPressed(index),
                               isSelected: index == _selectedDayIndex,
@@ -137,52 +141,62 @@ class _MyListHomeState extends State<MyListHome> {
                             topRight: Radius.circular(30)),
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text(
-                                  '12.22.Thr',
-                                  style: TextStyle(
-                                      fontSize: 20, fontWeight: FontWeight.bold),
-                                ),
-                                Expanded(
-                                  //복붙 후 프로바이더 이름 및 아이템(MyList에 해당) 만 변경
-                                  child: Consumer<MyListProvider>(//프로바이더를 사용할때 필수적인 요소 Consumer<프로바이더 이름>
-                                    builder: (context, provider, child) {//context, provider, child 고정적인 요소
-                                      return ListView.builder(
-                                        itemCount: provider.mylist.length,//아이템 갯수 -> mylist의 length(길이)
-                                        itemBuilder: (context, index) {
-                                          final mylist = provider.mylist[index];
-                                          return MyList(
-                                            title: (mylist.title),
-                                            subtitle: (mylist.subtitle),
-                                            color: Color(mylist.color),
-                                          );
-                                        },
-                                      );
-                                    },
+                            child: Container(
+                              padding: EdgeInsets.all(20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Text(
+                                        '12.22.Thr',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Expanded(
+                                    //복붙 후 프로바이더 이름 및 아이템(MyList에 해당) 만 변경
+                                    child: Consumer<MyListProvider>(
+                                      //프로바이더를 사용할때 필수적인 요소 Consumer<프로바이더 이름>
+                                      builder: (context, provider, child) {
+                                        //context, provider, child 고정적인 요소
+                                        return ListView.builder(
+                                          itemCount: provider.mylist.length,
+                                          //아이템 갯수 -> mylist의 length(길이)
+                                          itemBuilder: (context, index) {
+                                            final mylist =
+                                                provider.mylist[index];
+                                            return MyList(
+                                              title: (mylist.title),
+                                              subtitle: (mylist.subtitle),
+                                              color: Color(mylist.color),
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 10,
                           ),
                           SingleChildScrollView(
                             physics: NeverScrollableScrollPhysics(),
                             child: Container(
-                              width: screenWidth * 0.15,
-                              height: 400,
+                              margin: EdgeInsets.fromLTRB(0, 20, 20, 0),
                               child: Stack(
+                                alignment: Alignment.center,
                                 children: [
                                   Column(
                                     children: [
@@ -200,7 +214,7 @@ class _MyListHomeState extends State<MyListHome> {
                                         ),
                                       ),
                                       Container(
-                                        height: (screenHeight * 0.6) / 8 * 6,
+                                        height: 320,
                                         width: 6,
                                         color: Color(0xff836A45),
                                       ),
@@ -219,39 +233,41 @@ class _MyListHomeState extends State<MyListHome> {
                                       Text('24시'),
                                     ],
                                   ),
-                                  Container(
-                                    height: 400,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          height: 270,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              for (var i = 1; i <= 6; i++)
-                                                Row(
-                                                  children: [
-                                                    Container(
-                                                      height: 3,
-                                                      width: 10,
-                                                      color: Color(0xff836A45),
-                                                    ),
-                                                    Text(
-                                                      '${i * 3}',
-                                                      style: TextStyle(
-                                                          fontSize: 12),
-                                                    ),
-                                                  ],
-                                                ),
-                                            ],
-                                          ),
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 25,
+                                      ),
+                                      Container(
+                                        height: 270,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            for (var i = 1; i <= 6; i++)
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    height: 3,
+                                                    width: 10,
+                                                    color: Color(0xff836A45),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 3,
+                                                  ),
+                                                  Text(
+                                                    '${i * 3}',
+                                                    style:
+                                                        TextStyle(fontSize: 12),
+                                                  ),
+                                                ],
+                                              ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
+
                                 ],
                               ),
                             ),
@@ -276,9 +292,9 @@ class MyList extends StatelessWidget {
 
   const MyList(
       {Key? key,
-        required this.title,
-        required this.subtitle,
-        required this.color})
+      required this.title,
+      required this.subtitle,
+      required this.color})
       : super(key: key);
 
   @override
@@ -415,7 +431,7 @@ class _CustomCircleButtonsState extends State<CustomCircleButtons> {
             child: Text(
               '${_buttonNames[_selectedButton]}',
               style:
-              TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
             ),
           ),
         ),
@@ -438,12 +454,12 @@ class _CustomCircleButtonsState extends State<CustomCircleButtons> {
         ),
         child: _selectedButton == index
             ? Center(
-          child: Icon(
-            Icons.check,
-            size: 15,
-            color: Colors.white,
-          ),
-        )
+                child: Icon(
+                  Icons.check,
+                  size: 15,
+                  color: Colors.white,
+                ),
+              )
             : null,
       ),
     );
@@ -492,169 +508,58 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
             right: 30,
             child: _isButtonSelected
                 ? Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(width: 10),
-                  IconButton(
-                    onPressed: _toggleButton,
-                    icon: Icon(Icons.close),
-                    color: Colors.grey,
-                  ),
-                  SizedBox(width: 10),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: TextFormField(
-                      controller: _textEditingController,
-                      decoration: InputDecoration(
-                        hintText: '오늘 하루 칭찬 보내기',
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.send),
-                    color: Colors.grey,
-                  ),
-                  SizedBox(width: 10),
-                ],
-              ),
-            )
-                : SizedBox(
-              width: 60,
-              height: 60,
-              child: FloatingActionButton(
-                onPressed: _toggleButton,
-                child: Ink.image(
-                  image: AssetImage(
-                      'assets/images/CustomFloatingButton.png'),
-                  fit: BoxFit.cover,
-                  child: InkWell(
-                    onTap: _toggleButton,
-                  ),
-                ),
-                backgroundColor: Colors.white,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class TimeRange {
-  final int startTime;
-  final int endTime;
-  final Color color;
-
-  TimeRange({
-    required this.startTime,
-    required this.endTime,
-    required this.color,
-  });
-}
-
-class TimeBar extends StatefulWidget {
-  final List<TimeRange> timeRanges;
-
-  TimeBar({required this.timeRanges});
-
-  @override
-  _TimeBarState createState() => _TimeBarState();
-}
-
-class _TimeBarState extends State<TimeBar> {
-  @override
-  Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-
-    return SizedBox(
-      height: screenHeight * 0.74,
-      child: Row(
-        children: [
-          Container(
-            width: 30,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                for (var i = 0; i < 8; i++)
-                  Text(
-                    '${i * 3}시',
-                    style: TextStyle(fontSize: 12),
-                  ),
-                SizedBox(height: 10),
-                Container(
-                  height: screenHeight * 0.55,
-                  width: 6,
-                  color: Colors.grey,
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Container(
-              height: screenHeight * 0.7,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 24,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    height: screenHeight * 0.7,
-                    width: 60,
                     decoration: BoxDecoration(
-                      color: Colors.amber,
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    child: Stack(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        for (final timeRange in widget.timeRanges)
-                          _buildTimeRangeBox(
-                            startTime: timeRange.startTime,
-                            endTime: timeRange.endTime,
-                            index: index,
-                            color: timeRange.color,
+                        SizedBox(width: 10),
+                        IconButton(
+                          onPressed: _toggleButton,
+                          icon: Icon(Icons.close),
+                          color: Colors.grey,
+                        ),
+                        SizedBox(width: 10),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          child: TextFormField(
+                            controller: _textEditingController,
+                            decoration: InputDecoration(
+                              hintText: '오늘 하루 칭찬 보내기',
+                              border: InputBorder.none,
+                            ),
                           ),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.send),
+                          color: Colors.grey,
+                        ),
+                        SizedBox(width: 10),
                       ],
                     ),
-                  );
-                },
-              ),
-            ),
+                  )
+                : SizedBox(
+                    width: 60,
+                    height: 60,
+                    child: FloatingActionButton(
+                      onPressed: _toggleButton,
+                      child: Ink.image(
+                        image: AssetImage(
+                            'assets/images/CustomFloatingButton.png'),
+                        fit: BoxFit.cover,
+                        child: InkWell(
+                          onTap: _toggleButton,
+                        ),
+                      ),
+                      backgroundColor: Colors.white,
+                    ),
+                  ),
           ),
         ],
       ),
     );
-  }
-
-  Widget _buildTimeRangeBox({
-    required int startTime,
-    required int endTime,
-    required int index,
-    required Color color,
-  }) {
-    final int startBoxIndex = startTime ~/ 3;
-    final int endBoxIndex = (endTime - 1) ~/ 3;
-    final int boxCount = endBoxIndex - startBoxIndex + 1;
-
-    if (index >= startBoxIndex && index <= endBoxIndex) {
-      final double width = boxCount * 60.0 - (boxCount - 1) * 2.0;
-      final double left = startBoxIndex * 60.0 + (startBoxIndex - 1) * 2.0;
-
-      return Positioned(
-        left: left,
-        child: Container(
-          width: width,
-          height: double.infinity,
-          color: color,
-        ),
-      );
-    } else {
-      return SizedBox.shrink();
-    }
   }
 }

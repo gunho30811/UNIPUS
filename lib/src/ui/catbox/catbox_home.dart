@@ -595,11 +595,6 @@ class _CircleChartViewState extends State<CircleChartView> {
                                   title: 'Bad',
                                 ),
                                 // add your additional categories and corresponding colors here
-                                PieChartSectionData(
-                                  value: 10,
-                                  color: Color(0xffFDB813),
-                                  title: 'Other Category',
-                                ),
                               ],
                             ),
                           ),
