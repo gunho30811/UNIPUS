@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../model/mylist.dart';
+import '../model/mylist/mylist.dart';
 
 class MyListProvider with ChangeNotifier {
   List<MyList> _items = [
