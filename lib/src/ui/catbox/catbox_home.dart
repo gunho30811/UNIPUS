@@ -19,6 +19,21 @@ class _CatBoxHomeState extends State<CatBoxHome> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final screenSize = MediaQuery.of(context).size;
+    final itemProvider = Provider.of<ItemProvider>(context);
+    final items = itemProvider.itemsByMonth(DateTime.now().month);
+
+    // Calculate the grade counts
+    int excellentCount =
+        items.where((item) => item.grade == 'excellent').length;
+    int goodCount = items.where((item) => item.grade == 'good').length;
+    int badCount = items.where((item) => item.grade == 'bad').length;
+    int totalCount = items.length;
+
+    // Calculate the grade percentages
+    double excellentPercentage =
+        totalCount > 0 ? (excellentCount / totalCount) * 100 : 0;
+    double goodPercentage = totalCount > 0 ? (goodCount / totalCount) * 100 : 0;
+    double badPercentage = totalCount > 0 ? (badCount / totalCount) * 100 : 0;
 
     final PageController _pageController = PageController();
     bool canAddContainer = false; //고양이 추가할 수 있는가
@@ -85,7 +100,7 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                           return Container(
                             width: screenSize.width * 0.7,
                             decoration: BoxDecoration(
-                                color: Colors.red,
+                                color: Color(0XFFFFF0CB),
                                 borderRadius: BorderRadius.circular(30),
                                 boxShadow: [
                                   BoxShadow(
@@ -281,6 +296,153 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                               ),
                             ],
                           ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                    decoration: BoxDecoration(
+                      color: Color(0xffffffff),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 3,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '이달의 성적',
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
+                            ),
+                            TextButton(
+                                onPressed: () {},
+                                child: Text('앨범 >',
+                                    style: TextStyle(
+                                      color: Color(0xffAEAEBA),
+                                      fontSize: 15,
+                                    )))
+                          ],
+                        ),
+                        Stack(
+                          alignment: Alignment.centerLeft,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.symmetric(vertical: 5),
+                              height: 30,
+                              width: 350,
+                              decoration: BoxDecoration(
+                                color: Color(0xffECF0FA),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(vertical: 5),
+                              height: 30,
+                              width: excellentPercentage * 3.5,
+                              decoration: BoxDecoration(
+                                color: Color(0xffB6E8FD),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Excellent',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Stack(
+                          alignment: Alignment.centerLeft,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.symmetric(vertical: 5),
+                              height: 30,
+                              width: 350,
+                              decoration: BoxDecoration(
+                                color: Color(0xffECF0FA),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(vertical: 5),
+                              height: 30,
+                              width: goodPercentage * 3.5,
+                              decoration: BoxDecoration(
+                                color: Color(0xffBCF391),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Good',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Stack(
+                          alignment: Alignment.centerLeft,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.symmetric(vertical: 5),
+                              height: 30,
+                              width: 350,
+                              decoration: BoxDecoration(
+                                color: Color(0xffECF0FA),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(vertical: 5),
+                              height: 30,
+                              width: badPercentage * 3.5,
+                              decoration: BoxDecoration(
+                                color: Color(0xffFFC0C0),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Bad',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),
