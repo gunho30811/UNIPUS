@@ -18,7 +18,6 @@ class _CatBoxHomeState extends State<CatBoxHome> {
     final screenSize = MediaQuery.of(context).size;
 
     final PageController _pageController = PageController();
-
     bool canAddContainer = false; //고양이 추가할 수 있는가
 
     return SafeArea(

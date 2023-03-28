@@ -1,11 +1,10 @@
 import 'package:chur/src/home.dart';
 import 'package:chur/src/provider/authentication.dart';
-import 'package:chur/src/ui/my_list/my_list_home.dart';
-import 'package:chur/src/ui/setting/setting_home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
+import 'package:chur/src/provider/catbox_grade_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
