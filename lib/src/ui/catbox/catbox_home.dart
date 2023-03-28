@@ -511,28 +511,33 @@ class _CircleChartViewState extends State<CircleChartView> {
   @override
   Widget build(BuildContext context) {
     final itemProvider = Provider.of<ItemProvider>(context);
-    final items = itemProvider.itemsByMonth(DateTime.now().month);
+    final categories = ['Category 1', 'Category 2', 'Category 3','Category 4'];
 
-    // Calculate the grade counts
-    int excellentCount =
-        items.where((item) => item.grade == 'excellent').length;
-    int goodCount = items.where((item) => item.grade == 'good').length;
-    int badCount = items.where((item) => item.grade == 'bad').length;
-    int totalCount = items.length;
-
-    // Calculate the grade percentages
-    double excellentPercentage =
-        totalCount > 0 ? (excellentCount / totalCount) * 100 : 0;
-    double goodPercentage = totalCount > 0 ? (goodCount / totalCount) * 100 : 0;
-    double badPercentage = totalCount > 0 ? (badCount / totalCount) * 100 : 0;
     return Center(
       child: SizedBox(
-        height: 200,
+        height: 250,
         child: PageView.builder(
           controller: _pageController,
           itemBuilder: (BuildContext context, int index) {
+            final items = itemProvider.itemsByCategory(categories[index]);
+
+            // Calculate the grade counts
+            int excellentCount =
+                items.where((item) => item.grade == 'excellent').length;
+            int goodCount = items.where((item) => item.grade == 'good').length;
+            int badCount = items.where((item) => item.grade == 'bad').length;
+            int totalCount = items.length;
+
+            // Calculate the grade percentages
+            double excellentPercentage =
+                totalCount > 0 ? (excellentCount / totalCount) * 100 : 0;
+            double goodPercentage =
+                totalCount > 0 ? (goodCount / totalCount) * 100 : 0;
+            double badPercentage =
+                totalCount > 0 ? (badCount / totalCount) * 100 : 0;
+
             double scale = 1.0;
-            double opacity = 0.6;
+            double opacity = 0.8;
             if (_pageController.position.haveDimensions) {
               double diff = (index - _pageController.page!).abs();
               scale = 1 - (0.2 * diff);
@@ -559,8 +564,19 @@ class _CircleChartViewState extends State<CircleChartView> {
                     ],
                   ),
                   child: Center(
-                    child: index == 0
-                        ? PieChart(
+                    child: Column(
+                      children: [
+                        Text(
+                          categories[index],
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                          height: 170,
+                          child: PieChart(
                             PieChartData(
                               sections: [
                                 PieChartSectionData(
@@ -578,26 +594,24 @@ class _CircleChartViewState extends State<CircleChartView> {
                                   color: Color(0xffFFC0C0),
                                   title: 'Bad',
                                 ),
+                                // add your additional categories and corresponding colors here
+                                PieChartSectionData(
+                                  value: 10,
+                                  color: Color(0xffFDB813),
+                                  title: 'Other Category',
+                                ),
                               ],
                             ),
-                          )
-                        : index == 1
-                            ? Text(
-                                'Page 2: Another Chart',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 24),
-                              )
-                            : Text(
-                                'Page 3: Different Chart',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 24),
-                              ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             );
           },
-          itemCount: 3,
+          itemCount: categories.length,
         ),
       ),
     );

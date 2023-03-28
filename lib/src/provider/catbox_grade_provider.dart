@@ -6,53 +6,53 @@ class ItemProvider extends ChangeNotifier {
     Item(
         name: 'Item A1',
         date: DateTime(2023, 3, 10),
-        category: 'Electronics',
+        category: 'Category 3',
         grade: 'good'),
     Item(
         name: 'Item A1',
         date: DateTime(2023, 3, 10),
-        category: 'Electronics',
+        category: 'Category 1',
+        grade: 'excellent'),
+    Item(
+        name: 'Item A1',
+        date: DateTime(2023, 3, 10),
+        category: 'Category 1',
+        grade: 'excellent'),
+    Item(
+        name: 'Item A1',
+        date: DateTime(2023, 3, 10),
+        category: 'Category 2',
+        grade: 'excellent'),
+    Item(
+        name: 'Item A1',
+        date: DateTime(2023, 3, 10),
+        category: 'Category 1',
         grade: 'good'),
     Item(
         name: 'Item A1',
         date: DateTime(2023, 3, 10),
-        category: 'Electronics',
-        grade: 'good'),
-    Item(
-        name: 'Item A1',
-        date: DateTime(2023, 3, 10),
-        category: 'Electronics',
+        category: 'Category 1',
         grade: 'bad'),
     Item(
         name: 'Item A1',
         date: DateTime(2023, 3, 10),
-        category: 'Electronics',
+        category: 'Category 2',
         grade: 'good'),
     Item(
         name: 'Item A1',
         date: DateTime(2023, 3, 10),
-        category: 'Electronics',
+        category: 'Category 1',
         grade: 'good'),
     Item(
         name: 'Item A1',
         date: DateTime(2023, 3, 10),
-        category: 'Electronics',
+        category: 'Category 1',
         grade: 'good'),
     Item(
         name: 'Item A1',
         date: DateTime(2023, 3, 10),
-        category: 'Electronics',
-        grade: 'good'),
-    Item(
-        name: 'Item A1',
-        date: DateTime(2023, 3, 10),
-        category: 'Electronics',
-        grade: 'good'),
-    Item(
-        name: 'Item A1',
-        date: DateTime(2023, 3, 10),
-        category: 'Electronics',
-        grade: 'good'),
+        category: 'Category 2',
+        grade: 'bad'),
   ];
 
   List<Item> get items => _items;
