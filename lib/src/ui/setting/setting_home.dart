@@ -142,11 +142,7 @@ class SettingHome extends StatelessWidget {
                       ]),
                       IconButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CatBoxHome()),
-                            );
+                            Navigator.pop(context);
                           },
                           icon: Icon(Icons.arrow_back))
                     ],

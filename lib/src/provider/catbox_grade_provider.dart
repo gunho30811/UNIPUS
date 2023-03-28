@@ -22,6 +22,26 @@ class ItemProvider extends ChangeNotifier {
         name: 'Item A1',
         date: DateTime(2023, 3, 10),
         category: 'Electronics',
+        grade: 'bad'),
+    Item(
+        name: 'Item A1',
+        date: DateTime(2023, 3, 10),
+        category: 'Electronics',
+        grade: 'good'),
+    Item(
+        name: 'Item A1',
+        date: DateTime(2023, 3, 10),
+        category: 'Electronics',
+        grade: 'good'),
+    Item(
+        name: 'Item A1',
+        date: DateTime(2023, 3, 10),
+        category: 'Electronics',
+        grade: 'good'),
+    Item(
+        name: 'Item A1',
+        date: DateTime(2023, 3, 10),
+        category: 'Electronics',
         grade: 'good'),
     Item(
         name: 'Item A1',

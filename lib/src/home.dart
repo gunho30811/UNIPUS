@@ -2,9 +2,7 @@ import 'package:chur/src/provider/home_provider.dart';
 import 'package:chur/src/provider/mylist_provider.dart';
 import 'package:chur/src/ui/authentication/loginScreen.dart';
 import 'package:chur/src/ui/catbox/catbox_home.dart';
-import 'package:chur/src/ui/catbox/grade_class.dart';
 import 'package:chur/src/ui/my_list/my_list_home.dart';
-import 'package:chur/src/ui/setting/setting_home.dart';
 import 'package:chur/src/ui/timetable/calender.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,17 +15,17 @@ class Home extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-        home: MultiProvider(
-          providers: [
-            ChangeNotifierProvider<HomeProvider>(
-              create: (_) => HomeProvider(),
-            ),
-            ChangeNotifierProvider<MyListProvider>(
-              create: (_) => MyListProvider(),
-            ),
-          ],
-          child: MyHomePage(),
-        ),
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<HomeProvider>(
+            create: (_) => HomeProvider(),
+          ),
+          ChangeNotifierProvider<MyListProvider>(
+            create: (_) => MyListProvider(),
+          ),
+        ],
+        child: MyHomePage(),
+      ),
     );
   }
 }
@@ -42,7 +40,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   static List<Widget> _widgetOptions = <Widget>[
     Calendar(),
-    ChartScreen(),
+    Calendar(),
     MyListHome(),
     CatBoxHome(),
   ];
