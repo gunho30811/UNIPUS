@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+//statefulWidget 은 앱의 상태가 변화 할 수 있는 위젯을 정의
 class Calendar extends StatefulWidget {
+
+  //Calendar 위젯의 생성자. 'key'라는 선택적 매개변수를 받고, StatefulWidget의 생성자로 전달
   const Calendar({Key? key}) : super(key: key);
 
+  //_CalendarState클래스로 만든 _CalendarState 생성자를 createState()로 인스턴스를 생성
   @override
   _CalendarState createState() => _CalendarState();
 }
