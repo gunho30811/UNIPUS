@@ -80,10 +80,10 @@ class _CalendarState extends State<Calendar> {
     //scaffold 위젯을 사용하여 앱의 전체 레이아웃을 구성
     return Scaffold(
       //appBar 속성은 상단의 앱바를 구성
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text("Calendar"),
         centerTitle: true,
-        //appBar의 오른쪽에 위치한 ... 추가 작업 버튼을 추가, 이 버튼을 클릭하면 팝업 메뉴가 나타나고 해당 달 선택가능
+        appBar의 오른쪽에 위치한 ... 추가 작업 버튼을 추가, 이 버튼을 클릭하면 팝업 메뉴가 나타나고 해당 달 선택가능
         actions: [
           PopupMenuButton<int>(
             itemBuilder: (context) => [
@@ -103,13 +103,13 @@ class _CalendarState extends State<Calendar> {
             },
           ),
         ],
-      ),
+      ),*/
       body: Column(
         children: [
           //TableCalendar 위젯을 사용하여 캘린더표기
           TableCalendar(
             headerStyle: const HeaderStyle(
-              // formatButtonVisible: false,
+              formatButtonVisible: false,
               titleCentered: true,
               leftChevronVisible: true,
               rightChevronVisible: true,
