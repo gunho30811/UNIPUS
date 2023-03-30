@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
 
 //statefulWidget 은 앱의 상태가 변화 할 수 있는 위젯을 정의
 class Calendar extends StatefulWidget {
@@ -80,48 +81,29 @@ class _CalendarState extends State<Calendar> {
     //scaffold 위젯을 사용하여 앱의 전체 레이아웃을 구성
     return Scaffold(
       //appBar 속성은 상단의 앱바를 구성
-      /*appBar: AppBar(
-        title: Text("Calendar"),
-        centerTitle: true,
-        appBar의 오른쪽에 위치한 ... 추가 작업 버튼을 추가, 이 버튼을 클릭하면 팝업 메뉴가 나타나고 해당 달 선택가능
-        actions: [
-          PopupMenuButton<int>(
-            itemBuilder: (context) => [
-              for (var i = 1; i <= 12; i++)
-                PopupMenuItem(
-                  value: i,
-                  child: Text(
-                    "$i월",
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-            ],
-            onSelected: (value) {
-              setState(() {
-                _focusedDay = DateTime(DateTime.now().year, value);
-              });
-            },
-          ),
-        ],
-      ),*/
+      // appBar: AppBar(),
       body: Column(
         children: [
           //TableCalendar 위젯을 사용하여 캘린더표기
           TableCalendar(
-            headerStyle: const HeaderStyle(
-              formatButtonVisible: false,
-              titleCentered: true,
-              leftChevronVisible: true,
-              rightChevronVisible: true,
-              titleTextStyle: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
-              ),
-            ),
+            locale: 'en_US',
             firstDay: DateTime.utc(2010, 10, 16),
             lastDay: DateTime.utc(2030, 3, 14),
             focusedDay: _focusedDay,
             calendarFormat: _calendarFormat,
+            headerStyle: HeaderStyle(
+              titleCentered: true,
+              titleTextFormatter:(date, locale) =>
+                  DateFormat.MMMM(locale).format(date),
+                titleTextStyle: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0,
+                ),
+              leftChevronVisible: true,
+              rightChevronVisible: true,
+              formatButtonVisible: false,
+            ),
+
             //저장된 _calendarFormat을 새로운 형식 format으로 변경 후 렌더링
             onFormatChanged: (format) {
               if (_calendarFormat != format) {
