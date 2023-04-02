@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../home.dart';
 
-SharedPreferences prefs = SharedPreferences.getInstance() as SharedPreferences;
 
 const users = const {
   'dribbble@gmail.com': '12345',
@@ -22,9 +21,20 @@ class LoginScreen extends StatefulWidget {
 
 }
 
+
+
 class _LoginScreenState extends State<LoginScreen> {
   Duration get loginTime => Duration(milliseconds: 2250);
 
+  late SharedPreferences prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((value) {
+      prefs = value;
+    });
+  }
 
   Future<String?> _authUser(LoginData data) async {
     try {
@@ -58,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
   // Future<String?> _recoverPassword(String name) {
   //   return null;
   // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -112,14 +123,19 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
 
-  String? group = prefs.getString('gruop');
-  Widget _activePage() {
+
+  Widget _activePage(){
+
+    String? group = prefs.getString('group');
     if (group != null) {//로그인 SharedPreferences를 사용하여 로그인 여부 판단
+      print("login");
       return Home();
     } else {//회원가입
+      print("register");
       return Home();
     }
   }
+
 }
 
 
