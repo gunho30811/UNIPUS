@@ -1,4 +1,5 @@
 import 'package:chur/src/provider/authentication.dart';
+import 'package:chur/src/ui/authentication/sign_up_details_Screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
@@ -57,6 +58,16 @@ class _LoginScreenState extends State<LoginScreen> {
           .register(data.name, data.password);
       if (user == null) {
         return '회원가입에 실패했습니다.';
+      } else {
+        // 회원가입에 성공한 경우, 추가 정보 입력 화면으로 이동합니다.
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => SignUpDetailsScreen(
+              email: data.name,
+              password: data.password,
+            ),
+          ),
+        );
       }
       return null;
     } catch (e) {
@@ -115,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
         messages: LoginMessages(
           loginButton: '로그인',
           signupButton: '회원가입',
-          forgotPasswordButton: '',
+          forgotPasswordButton: '비밀번호 찾기',
           recoverPasswordDescription: '비밀번호를 잊으셨나요? 이메일 주소를 입력하고 비밀번호를 복구하세요.',
         ),
     ),
