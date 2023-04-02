@@ -60,8 +60,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FlutterLogin(
-        title: 'Fireauth Demo',
-        logo: 'assets/images/test.jpg',
+        title: '로그인하기',
+        // logo: 'assets/images/test.jpg',
         onLogin: _authUser,
         onSignup: _registerUser,
         onSubmitAnimationCompleted: () {
@@ -71,9 +71,40 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           );
         },
-        onRecoverPassword: (String ) {  },
+        onRecoverPassword: (String ) {},
         //onRecoverPassword: _recoverPassword,
+        theme: LoginTheme(
+          accentColor: Colors.orange,
+          primaryColor: Colors.orange,
+          inputTheme: InputDecorationTheme(
+            filled: true,
+            fillColor: Colors.white,
+            contentPadding:
+            EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.orange),
+              borderRadius: BorderRadius.circular(25.7),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.orange),
+              borderRadius: BorderRadius.circular(25.7),
+            ),
+          ),
+          pageColorLight: Colors.white,
+          pageColorDark: Colors.white,
+          titleStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 40,
+            fontWeight: FontWeight.w500
+          )
       ),
+        messages: LoginMessages(
+          loginButton: '로그인',
+          signupButton: '회원가입',
+          forgotPasswordButton: '',
+          recoverPasswordDescription: '비밀번호를 잊으셨나요? 이메일 주소를 입력하고 비밀번호를 복구하세요.',
+        ),
+    ),
     );
   }
 }

@@ -103,7 +103,6 @@ class _CalendarState extends State<Calendar> {
               rightChevronVisible: true,
               formatButtonVisible: false,
             ),
-
             //저장된 _calendarFormat을 새로운 형식 format으로 변경 후 렌더링
             onFormatChanged: (format) {
               if (_calendarFormat != format) {
