@@ -27,6 +27,7 @@ class Authentication extends ChangeNotifier {
       return null;
     }
   }
+
   Future<User?> register(String email, String password) async {//회원가입
     try {
       final UserCredential result = await _auth

@@ -1,11 +1,13 @@
 import 'package:chur/src/provider/authentication.dart';
-import 'package:chur/src/ui/timetable/calender.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../home.dart';
+
+SharedPreferences prefs = SharedPreferences.getInstance() as SharedPreferences;
 
 const users = const {
   'dribbble@gmail.com': '12345',
@@ -22,6 +24,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   Duration get loginTime => Duration(milliseconds: 2250);
+
 
   Future<String?> _authUser(LoginData data) async {
     try {
@@ -67,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
         onSubmitAnimationCompleted: () {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (context) => Home(),
+              builder: (context) => _activePage(),
             ),
           );
         },
@@ -75,6 +78,16 @@ class _LoginScreenState extends State<LoginScreen> {
         //onRecoverPassword: _recoverPassword,
       ),
     );
+  }
+
+
+  String? group = prefs.getString('gruop');
+  Widget _activePage() {
+    if (group != null) {//로그인 SharedPreferences를 사용하여 로그인 여부 판단
+      return Home();
+    } else {//회원가입
+      return Home();
+    }
   }
 }
 
