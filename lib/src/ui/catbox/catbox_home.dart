@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../provider/catbox_grade_provider.dart';
+import '../../provider/character_provider.dart';
 
 class CatBoxHome extends StatefulWidget {
   const CatBoxHome({Key? key}) : super(key: key);
@@ -43,19 +44,249 @@ class _CatBoxHomeState extends State<CatBoxHome> {
         backgroundColor: Color(0xffF2F2F7),
         body: SingleChildScrollView(
           child: Center(
-            child: Container(
-              width: screenWidth * 0.9,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 13),
-                    height: screenHeight * 0.07,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
+            child: Consumer<CharacterProvider>(
+                builder: (context, characterProvider, child) {
+              return Container(
+                width: screenWidth * 0.9,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 13),
+                      height: screenHeight * 0.07,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 3,
+                              offset: Offset(0, 3),
+                            ),
+                          ]),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '사용자 닉네임',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w900),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.settings, size: 30),
+                            color: Colors.grey,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SettingHome()),
+                              );
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: screenHeight * 0.3,
+                      child: PageView.builder(
+                        itemCount: pageCount + 1,
+                        controller: _pageController,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index < pageCount) {
+                            return Container(
+                                width: screenSize.width * 0.7,
+                                child: Center(
+                                    child: Container(
+                                  width: screenWidth * 0.8,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.25),
+                                          spreadRadius: 4,
+                                          blurRadius: 4,
+                                          offset: Offset(0, 3), // x축과 y축의 위치 조정
+                                        ),
+                                      ],
+                                      color: Color(0xffFFF0CB)),
+                                  child: Stack(
+                                    alignment: Alignment.topCenter,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          SizedBox(
+                                            width: screenWidth * 0.7,
+                                            child: LinearProgressIndicator(
+                                              value: characterProvider
+                                                  .getExpBarValue(),
+                                              backgroundColor: Colors.grey,
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                      Color.fromARGB(
+                                                          255, 250, 107, 41)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: screenWidth * 0.7,
+                                        child: Image.asset(characterProvider
+                                            .character.currentImage),
+                                      ),
+                                    ],
+                                  ),
+                                )));
+                          } else {
+                            return Container(
+                              width: screenSize.width * 0.7,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(30),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 2,
+                                      blurRadius: 3,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ]),
+                              child: Center(
+                                child: IconButton(
+                                  icon: Icon(Icons.add, size: 40),
+                                  onPressed: () {
+                                    if (canAddContainer) {
+                                      setState(() {
+                                        pageCount += 1;
+                                      });
+                                    } else {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("알림"),
+                                            content: Text("조건에 해당하지 않습니다."),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text("확인"),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 80,
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      decoration: BoxDecoration(
+                        color: Color(0xffFFF9EA),
+                        borderRadius: BorderRadius.circular(40),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 3,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () => characterProvider.useItem(0),
+                            child: Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                Image.asset(
+                                  'assets/images/snack_1.png',
+                                  width: 70,
+                                  height: 70,
+                                ),
+                                Text(
+                                  'x ${characterProvider.character.itemCounts[0]}',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () => characterProvider.useItem(1),
+                            child: Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                Image.asset(
+                                  'assets/images/snack_2.png',
+                                  width: 70,
+                                  height: 70,
+                                ),
+                                Text(
+                                  'x ${characterProvider.character.itemCounts[1]}',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () => characterProvider.useItem(2),
+                            child: Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                Image.asset(
+                                  'assets/images/snack_3.png',
+                                  width: 70,
+                                  height: 70,
+                                ),
+                                Text(
+                                  'x ${characterProvider.character.itemCounts[2]}',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                      decoration: BoxDecoration(
+                        color: Color(0xffffffff),
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
@@ -64,417 +295,167 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                             blurRadius: 3,
                             offset: Offset(0, 3),
                           ),
-                        ]),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '이달의 성적',
+                                style: TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.bold),
+                              ),
+                              TextButton(
+                                  onPressed: () {},
+                                  child: Text('앨범 >',
+                                      style: TextStyle(
+                                        color: Color(0xffAEAEBA),
+                                        fontSize: 15,
+                                      )))
+                            ],
+                          ),
+                          Stack(
+                            alignment: Alignment.centerLeft,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 5),
+                                height: 30,
+                                width: 350,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffECF0FA),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 5),
+                                height: 30,
+                                width: excellentPercentage * 3.5,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffB6E8FD),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Excellent',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Stack(
+                            alignment: Alignment.centerLeft,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 5),
+                                height: 30,
+                                width: 350,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffECF0FA),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 5),
+                                height: 30,
+                                width: goodPercentage * 3.5,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffBCF391),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Good',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Stack(
+                            alignment: Alignment.centerLeft,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 5),
+                                height: 30,
+                                width: 350,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffECF0FA),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 5),
+                                height: 30,
+                                width: badPercentage * 3.5,
+                                decoration: BoxDecoration(
+                                  color: Color(0xffFFC0C0),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Bad',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
                       children: [
+                        SizedBox(width: 10),
                         Text(
-                          '사용자 닉네임',
+                          '닉네임',
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w900),
+                              fontSize: 25, fontWeight: FontWeight.bold),
                         ),
-                        IconButton(
-                          icon: Icon(Icons.settings, size: 30),
-                          color: Colors.grey,
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SettingHome()),
-                            );
-                          },
+                        Text(
+                          '의 카테고리',
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    height: screenHeight * 0.35,
-                    child: PageView.builder(
-                      itemCount: pageCount + 1,
-                      controller: _pageController,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (index < pageCount) {
-                          return Container(
-                            width: screenSize.width * 0.7,
-                            decoration: BoxDecoration(
-                                color: Color(0XFFFFF0CB),
-                                borderRadius: BorderRadius.circular(30),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 3,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ]),
-                            child: Center(child: Text('Page 1')),
-                          );
-                        } else {
-                          return Container(
-                            width: screenSize.width * 0.7,
-                            decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                borderRadius: BorderRadius.circular(30),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 3,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ]),
-                            child: Center(
-                              child: IconButton(
-                                icon: Icon(Icons.add, size: 40),
-                                onPressed: () {
-                                  if (canAddContainer) {
-                                    setState(() {
-                                      pageCount += 1;
-                                    });
-                                  } else {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: Text("알림"),
-                                          content: Text("조건에 해당하지 않습니다."),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text("확인"),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  }
-                                },
-                              ),
-                            ),
-                          );
-                        }
-                      },
+                    SizedBox(
+                      height: 20,
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    height: 80,
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    decoration: BoxDecoration(
-                      color: Color(0xffFFF9EA),
-                      borderRadius: BorderRadius.circular(40),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
+                    CircleChartView(),
+                    SizedBox(
+                      height: 20,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('아이템1'),
-                                  content: Text('Content'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('OK'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          child: Stack(
-                            alignment: Alignment.bottomCenter,
-                            children: [
-                              Image.asset(
-                                'assets/images/snack_1.png',
-                                width: 70,
-                                height: 70,
-                              ),
-                              Text(
-                                'x4',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('아이템2'),
-                                  content: Text('Content'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('OK'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          child: Stack(
-                            alignment: Alignment.bottomCenter,
-                            children: [
-                              Image.asset(
-                                'assets/images/snack_2.png',
-                                width: 70,
-                                height: 70,
-                              ),
-                              Text(
-                                'x4',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('아이템3'),
-                                  content: Text('Content'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('OK'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          child: Stack(
-                            alignment: Alignment.bottomCenter,
-                            children: [
-                              Image.asset(
-                                'assets/images/snack_3.png',
-                                width: 70,
-                                height: 70,
-                              ),
-                              Text(
-                                'x4',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                    decoration: BoxDecoration(
-                      color: Color(0xffffffff),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '이달의 성적',
-                              style: TextStyle(
-                                  fontSize: 25, fontWeight: FontWeight.bold),
-                            ),
-                            TextButton(
-                                onPressed: () {},
-                                child: Text('앨범 >',
-                                    style: TextStyle(
-                                      color: Color(0xffAEAEBA),
-                                      fontSize: 15,
-                                    )))
-                          ],
-                        ),
-                        Stack(
-                          alignment: Alignment.centerLeft,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.symmetric(vertical: 5),
-                              height: 30,
-                              width: 350,
-                              decoration: BoxDecoration(
-                                color: Color(0xffECF0FA),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(vertical: 5),
-                              height: 30,
-                              width: excellentPercentage * 3.5,
-                              decoration: BoxDecoration(
-                                color: Color(0xffB6E8FD),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Excellent',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Stack(
-                          alignment: Alignment.centerLeft,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.symmetric(vertical: 5),
-                              height: 30,
-                              width: 350,
-                              decoration: BoxDecoration(
-                                color: Color(0xffECF0FA),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(vertical: 5),
-                              height: 30,
-                              width: goodPercentage * 3.5,
-                              decoration: BoxDecoration(
-                                color: Color(0xffBCF391),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Good',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Stack(
-                          alignment: Alignment.centerLeft,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.symmetric(vertical: 5),
-                              height: 30,
-                              width: 350,
-                              decoration: BoxDecoration(
-                                color: Color(0xffECF0FA),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(vertical: 5),
-                              height: 30,
-                              width: badPercentage * 3.5,
-                              decoration: BoxDecoration(
-                                color: Color(0xffFFC0C0),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Bad',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(width: 10),
-                      Text(
-                        '닉네임',
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        '의 카테고리',
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  CircleChartView(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
-            ),
+                  ],
+                ),
+              );
+            }),
           ),
         ),
       ),
@@ -511,7 +492,7 @@ class _CircleChartViewState extends State<CircleChartView> {
   @override
   Widget build(BuildContext context) {
     final itemProvider = Provider.of<ItemProvider>(context);
-    final categories = ['Category 1', 'Category 2', 'Category 3','Category 4'];
+    final categories = ['Category 1', 'Category 2', 'Category 3', 'Category 4'];
 
     return Center(
       child: SizedBox(

@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 
 //statefulWidget 은 앱의 상태가 변화 할 수 있는 위젯을 정의
 class Calendar extends StatefulWidget {
-
   //Calendar 위젯의 생성자. 'key'라는 선택적 매개변수를 받고, StatefulWidget의 생성자로 전달
   const Calendar({Key? key}) : super(key: key);
 
@@ -38,8 +37,7 @@ class _CalendarState extends State<Calendar> {
           _calendarFormat = CalendarFormat.week;
         });
       }
-    }
-    );
+    });
   }
 
   //달력에서 날짜를 선택할 때 호출되는 콜백 함수
@@ -79,102 +77,104 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     //scaffold 위젯을 사용하여 앱의 전체 레이아웃을 구성
-    return Scaffold(
-      //appBar 속성은 상단의 앱바를 구성
-      // appBar: AppBar(),
-      body: Column(
-        children: [
-          //TableCalendar 위젯을 사용하여 캘린더표기
-          TableCalendar(
-            locale: 'en_US',
-            firstDay: DateTime.utc(2010, 10, 16),
-            lastDay: DateTime.utc(2030, 3, 14),
-            focusedDay: _focusedDay,
-            calendarFormat: _calendarFormat,
-            headerStyle: HeaderStyle(
-              titleCentered: true,
-              titleTextFormatter:(date, locale) =>
-                  DateFormat.MMMM(locale).format(date),
+    return SafeArea(
+      child: Scaffold(
+        //appBar 속성은 상단의 앱바를 구성
+        // appBar: AppBar(),
+        body: Column(
+          children: [
+            //TableCalendar 위젯을 사용하여 캘린더표기
+            TableCalendar(
+              locale: 'en_US',
+              firstDay: DateTime.utc(2010, 10, 16),
+              lastDay: DateTime.utc(2030, 3, 14),
+              focusedDay: _focusedDay,
+              calendarFormat: _calendarFormat,
+              headerStyle: HeaderStyle(
+                titleCentered: true,
+                titleTextFormatter: (date, locale) =>
+                    DateFormat.MMMM(locale).format(date),
                 titleTextStyle: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
                 ),
-              leftChevronVisible: true,
-              rightChevronVisible: true,
-              formatButtonVisible: false,
-            ),
-            //저장된 _calendarFormat을 새로운 형식 format으로 변경 후 렌더링
-            onFormatChanged: (format) {
-              if (_calendarFormat != format) {
-                setState(() {
-                  _calendarFormat = format;
-                });
-              }
-            },
-            //페이지 변경시 호출 되는 콜백 함수 정의
-            onPageChanged: (focusedDay) {
-              _focusedDay = focusedDay;
-            },
-            //선택된 날짜에 대한 조건을 설정하고 선택된 날짜가 변경 시 호출되는 콜백 함수를 정의
-            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-            onDaySelected: _onDaySelected,
-            eventLoader: _getEventsForDay,
-          ),
-          const SizedBox(height: 8.0),
-          Expanded(
-            //선택된 날짜에 대한 이벤트 목록을 표시
-            child: ListView(
-              children: _selectedDay != null
-                  ? _getEventsForDay(_selectedDay!).map((event) {
-                return ListTile(
-                  title: Text(event),
-                );
-              }).toList()
-                  : [],
-            ),
-          ),
-        ],
-      ),
-
-      //오른쪽 하단에 위치하는 FloatingActionButton을 정의
-      floatingActionButton: FloatingActionButton(
-        // 버튼을 누르면 비동기 함수를 정의
-        onPressed: () async {
-          //메모 입력을 위한 TextEditingController 객체 생성
-          TextEditingController memoController = TextEditingController();
-          // showDialog 함수 호출하고 대화 상자가 닫힐 때 까지 기다림
-          await showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text('Add Memo'),
-              content: TextField(
-                controller: memoController,
-                decoration: InputDecoration(
-                  labelText: 'Memo',
-                ),
+                leftChevronVisible: true,
+                rightChevronVisible: true,
+                formatButtonVisible: false,
               ),
-              actions: [
-                //대화상자에 취소
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Cancel'),
-                ),
-                //추가 버튼
-                TextButton(
-                  onPressed: () {
-                    _addMemoToSelectedDay(memoController.text);
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Add'),
-                ),
-              ],
+              //저장된 _calendarFormat을 새로운 형식 format으로 변경 후 렌더링
+              onFormatChanged: (format) {
+                if (_calendarFormat != format) {
+                  setState(() {
+                    _calendarFormat = format;
+                  });
+                }
+              },
+              //페이지 변경시 호출 되는 콜백 함수 정의
+              onPageChanged: (focusedDay) {
+                _focusedDay = focusedDay;
+              },
+              //선택된 날짜에 대한 조건을 설정하고 선택된 날짜가 변경 시 호출되는 콜백 함수를 정의
+              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+              onDaySelected: _onDaySelected,
+              eventLoader: _getEventsForDay,
             ),
-          );
-        },
-        //+ 기호 표기
-        child: Icon(Icons.add),
+            const SizedBox(height: 8.0),
+            Expanded(
+              //선택된 날짜에 대한 이벤트 목록을 표시
+              child: ListView(
+                children: _selectedDay != null
+                    ? _getEventsForDay(_selectedDay!).map((event) {
+                        return ListTile(
+                          title: Text(event),
+                        );
+                      }).toList()
+                    : [],
+              ),
+            ),
+          ],
+        ),
+
+        //오른쪽 하단에 위치하는 FloatingActionButton을 정의
+        floatingActionButton: FloatingActionButton(
+          // 버튼을 누르면 비동기 함수를 정의
+          onPressed: () async {
+            //메모 입력을 위한 TextEditingController 객체 생성
+            TextEditingController memoController = TextEditingController();
+            // showDialog 함수 호출하고 대화 상자가 닫힐 때 까지 기다림
+            await showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text('Add Memo'),
+                content: TextField(
+                  controller: memoController,
+                  decoration: InputDecoration(
+                    labelText: 'Memo',
+                  ),
+                ),
+                actions: [
+                  //대화상자에 취소
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Cancel'),
+                  ),
+                  //추가 버튼
+                  TextButton(
+                    onPressed: () {
+                      _addMemoToSelectedDay(memoController.text);
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Add'),
+                  ),
+                ],
+              ),
+            );
+          },
+          //+ 기호 표기
+          child: Icon(Icons.add),
+        ),
       ),
     );
   }
