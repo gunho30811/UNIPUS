@@ -82,6 +82,10 @@ class _LoginScreenState extends State<LoginScreen> {
   // }
 
 
+  //카카오 로그인 로직 : 카카오 로그인 -> 로그인 후 카카오Id추출 kakaoId@kakao.com | kakaoId (아이디 | 비번)
+  //해당 정보로 fireauth 로그인 registerKakao(kakaoId)로 실행
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
