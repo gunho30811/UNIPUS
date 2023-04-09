@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +20,7 @@ class _CalendarState extends State<Calendar> {
   late DateTime _focusedDay;
   DateTime? _selectedDay;
   Map<DateTime, List<String>> _events = {};
+  double _calendarHeightRatio = 2.2;
 
   //initState() 메서드는 위젯의 초기 상태를 설정합니다. (_calendarFormat, _focusedDay,_selectedDay 을 초기화 하고 _calendarFormat을 폰트 높이에 따라 변경함)
   @override
@@ -69,6 +72,13 @@ class _CalendarState extends State<Calendar> {
       setState(() {
         //리스트에 새로운 메모추가
         _events[_selectedDay!]!.add(memo);
+        // 메모가 생기면 달력의 높이를 줄입니다.
+        if (_events[_selectedDay!]!.length > 0) {
+          _calendarHeightRatio = 1.5;
+        } else {
+          // 메모가 없으면 달력의 높이를 원래대로 돌려놓습니다.
+          _calendarHeightRatio = 2.2;
+        }
       });
     }
   }
@@ -83,13 +93,43 @@ class _CalendarState extends State<Calendar> {
         // appBar: AppBar(),
         body: Column(
           children: [
-            //TableCalendar 위젯을 사용하여 캘린더표기
-            TableCalendar(
+            AspectRatio(
+              aspectRatio: _calendarHeightRatio,
+              //TableCalendar 위젯을 사용하여 캘린더표기
+            child:TableCalendar(
               locale: 'en_US',
               firstDay: DateTime.utc(2010, 10, 16),
               lastDay: DateTime.utc(2030, 3, 14),
               focusedDay: _focusedDay,
               calendarFormat: _calendarFormat,
+
+              calendarBuilders: CalendarBuilders(
+                markerBuilder: (context, date, events) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: events.map((event) {
+                      // 이벤트에 고유한 색상을 사용하려면 메모의 해시 코드를 기반으로 색상을 생성할 수 있습니다.
+                      Color eventColor() => Color.fromARGB(
+                        255,
+                        event.hashCode % 256,
+                        (event.hashCode * 13) % 256,
+                        (event.hashCode * 37) % 256,
+                      );
+
+                      return Container(
+                        margin: EdgeInsets.symmetric(horizontal: 1.0),
+                        width: 6,
+                        height: 6,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: eventColor(),
+                        ),
+                      );
+                    }).toList(),
+                  );
+                },
+              ),
+
               headerStyle: HeaderStyle(
                 titleCentered: true,
                 titleTextFormatter: (date, locale) =>
@@ -119,8 +159,9 @@ class _CalendarState extends State<Calendar> {
               onDaySelected: _onDaySelected,
               eventLoader: _getEventsForDay,
             ),
+            ),
             const SizedBox(height: 8.0),
-            Expanded(
+            Flexible(
               //선택된 날짜에 대한 이벤트 목록을 표시
               child: ListView(
                 children: _selectedDay != null
