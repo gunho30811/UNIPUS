@@ -147,7 +147,7 @@ class _MyListHomeState extends State<MyListHome> {
                             child: Container(
                               padding: EdgeInsets.all(20),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
                                     children: [
@@ -191,87 +191,6 @@ class _MyListHomeState extends State<MyListHome> {
                               ),
                             ),
                           ),
-                          SingleChildScrollView(
-                            physics: NeverScrollableScrollPhysics(),
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 20, 20, 0),
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text('00시'),
-                                      Container(
-                                        width: 20,
-                                        height: 20,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: Color(0xff836A45),
-                                            width: 5,
-                                            style: BorderStyle.solid,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 320,
-                                        width: 6,
-                                        color: Color(0xff836A45),
-                                      ),
-                                      Container(
-                                        width: 20,
-                                        height: 20,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: Color(0xff836A45),
-                                            width: 5,
-                                            style: BorderStyle.solid,
-                                          ),
-                                        ),
-                                      ),
-                                      Text('24시'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 25,
-                                      ),
-                                      Container(
-                                        height: 270,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            for (var i = 1; i <= 6; i++)
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    height: 3,
-                                                    width: 10,
-                                                    color: Color(0xff836A45),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 3,
-                                                  ),
-                                                  Text(
-                                                    '${i * 3}',
-                                                    style:
-                                                        TextStyle(fontSize: 12),
-                                                  ),
-                                                ],
-                                              ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-
-                                ],
-                              ),
-                            ),
-                          ),
                         ],
                       )),
                 ),
@@ -299,11 +218,13 @@ class MyList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Column(
       children: [
         Container(
-          height: 80,
-          width: 250,
+          height: 100,
+          width: screenWidth * 0.8,
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -319,9 +240,6 @@ class MyList extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-              ),
               Container(
                 height: 55,
                 width: 7,
@@ -356,18 +274,18 @@ class MyList extends StatelessWidget {
                 },
                 child: Container(
                   padding: EdgeInsets.all(8),
-                  width: 180,
+                  width: 200,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Align(
-                        alignment: Alignment.topLeft,
+                      SizedBox(
+                        height: 10,
                       ),
                       Text(
                         title,
                         style: TextStyle(
                             fontSize: 20,
-                            color: Colors.grey,
+                            color: Colors.black,
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
@@ -444,8 +362,8 @@ class _CustomCircleButtonsState extends State<CustomCircleButtons> {
     return GestureDetector(
       onTap: () => _onButtonPressed(index),
       child: Container(
-        width: 16,
-        height: 16,
+        width: 18,
+        height: 18,
         decoration: BoxDecoration(
           color: _selectedButton == index
               ? _buttonColors[index]
@@ -542,19 +460,19 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
                     ),
                   )
                 : SizedBox(
-                    width: 60,
-                    height: 60,
+                    width: 70,
+                    height: 70,
                     child: FloatingActionButton(
                       onPressed: _toggleButton,
                       child: Ink.image(
                         image: AssetImage(
                             'assets/images/CustomFloatingButton.png'),
-                        fit: BoxFit.cover,
                         child: InkWell(
                           onTap: _toggleButton,
                         ),
                       ),
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
                     ),
                   ),
           ),
