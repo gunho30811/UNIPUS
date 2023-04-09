@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'package:chur/src/model/http/success.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
+
+import '../model/response/success.dart';
 
 
 class AuthenticationRepository {

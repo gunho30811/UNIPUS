@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
         // 회원가입에 성공한 경우, 추가 정보 입력 화면으로 이동합니다.
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => SignUpDetailsScreen(),
+            builder: (context) => _activePage(),
           ),
         );
       }
@@ -191,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
       return Home();
     } else {//회원가입
       print("register");
-      return Home();
+      return SignUpDetailsScreen();
     }
   }
 
