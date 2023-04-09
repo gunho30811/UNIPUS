@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kakao_flutter_sdk/auth.dart';
-import 'package:kakao_flutter_sdk/user.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 //
 // Future<User?> signInWithKakao() async {
 //   final installed = await isKakaoTalkInstalled();
@@ -37,10 +37,8 @@ Future<String?> Kakao(BuildContext context) async {
 
     // Firebase Authentication의 이메일/비밀번호 로그인을 시도합니다.
     return kakaoId;
-
   } catch (e) {
     // 로그인 실패 처리
     return null;
   }
-
 }
