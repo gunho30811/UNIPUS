@@ -20,7 +20,7 @@ class _CalendarState extends State<Calendar> {
   late DateTime _focusedDay;
   DateTime? _selectedDay;
   Map<DateTime, List<String>> _events = {};
-  double _calendarHeightRatio = 2.2;
+  // double _calendarHeightRatio = 2.2;
 
   //initState() 메서드는 위젯의 초기 상태를 설정합니다. (_calendarFormat, _focusedDay,_selectedDay 을 초기화 하고 _calendarFormat을 폰트 높이에 따라 변경함)
   @override
@@ -31,16 +31,16 @@ class _CalendarState extends State<Calendar> {
     _selectedDay = DateTime.now();
 
     //WidgetsBinding.instance!.addPostFrameCallback() 메서드를 사용하여, 포스트 프레임 콜백을 등록, 화면레이아웃에 따라 화면의 높이를 계산
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      final height = MediaQuery.of(context).size.height;
-      if (height <= 460) {
-        //setState() 메서드 호출로 변경사항을 즉시 적용
-        setState(() {
-          //높이가 460보다 작거나 같은 경우 _calendarFormat을 CalendarFormat.week로 변경함
-          _calendarFormat = CalendarFormat.week;
-        });
-      }
-    });
+    // WidgetsBinding.instance!.addPostFrameCallback((_) {
+    //   final height = MediaQuery.of(context).size.height;
+    //   if (height <= 460) {
+    //     //setState() 메서드 호출로 변경사항을 즉시 적용
+    //     setState(() {
+    //       //높이가 460보다 작거나 같은 경우 _calendarFormat을 CalendarFormat.week로 변경함
+    //       _calendarFormat = CalendarFormat.week;
+    //     });
+    //   }
+    // });
   }
 
   //달력에서 날짜를 선택할 때 호출되는 콜백 함수
@@ -73,12 +73,6 @@ class _CalendarState extends State<Calendar> {
         //리스트에 새로운 메모추가
         _events[_selectedDay!]!.add(memo);
         // 메모가 생기면 달력의 높이를 줄입니다.
-        if (_events[_selectedDay!]!.length > 0) {
-          _calendarHeightRatio = 1.5;
-        } else {
-          // 메모가 없으면 달력의 높이를 원래대로 돌려놓습니다.
-          _calendarHeightRatio = 2.2;
-        }
       });
     }
   }
@@ -86,15 +80,24 @@ class _CalendarState extends State<Calendar> {
   //화면에 보이는 위젯 생성,반환
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double calendarHeight = screenHeight * 0.65;
+    double memoHeight = screenHeight * 0.35;
+
+    if (_selectedDay != null && _getEventsForDay(_selectedDay!).length > 0) {
+      calendarHeight = screenHeight * 0.5;
+      memoHeight = screenHeight * 0.5;
+    }
     //scaffold 위젯을 사용하여 앱의 전체 레이아웃을 구성
     return SafeArea(
       child: Scaffold(
         //appBar 속성은 상단의 앱바를 구성
         // appBar: AppBar(),
-        body: Column(
+        body: SingleChildScrollView(
+        child: Column(
           children: [
-            AspectRatio(
-              aspectRatio: _calendarHeightRatio,
+            Container(
+              height: calendarHeight,
               //TableCalendar 위젯을 사용하여 캘린더표기
             child:TableCalendar(
               locale: 'en_US',
@@ -161,7 +164,8 @@ class _CalendarState extends State<Calendar> {
             ),
             ),
             const SizedBox(height: 8.0),
-            Flexible(
+            Container(
+              height: memoHeight,
               //선택된 날짜에 대한 이벤트 목록을 표시
               child: ListView(
                 children: _selectedDay != null
@@ -175,7 +179,7 @@ class _CalendarState extends State<Calendar> {
             ),
           ],
         ),
-
+        ),
         //오른쪽 하단에 위치하는 FloatingActionButton을 정의
         floatingActionButton: FloatingActionButton(
           // 버튼을 누르면 비동기 함수를 정의
