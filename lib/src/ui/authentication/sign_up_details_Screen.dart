@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 
 class SignUpDetailsScreen extends StatefulWidget {
-  final String email;
-  final String password;
-
-  SignUpDetailsScreen({required this.email, required this.password});
-
   @override
   _SignUpDetailsScreenState createState() => _SignUpDetailsScreenState();
 }
