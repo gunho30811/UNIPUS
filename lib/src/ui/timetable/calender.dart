@@ -31,16 +31,16 @@ class _CalendarState extends State<Calendar> {
     _selectedDay = DateTime.now();
 
     //WidgetsBinding.instance!.addPostFrameCallback() 메서드를 사용하여, 포스트 프레임 콜백을 등록, 화면레이아웃에 따라 화면의 높이를 계산
-    // WidgetsBinding.instance!.addPostFrameCallback((_) {
-    //   final height = MediaQuery.of(context).size.height;
-    //   if (height <= 460) {
-    //     //setState() 메서드 호출로 변경사항을 즉시 적용
-    //     setState(() {
-    //       //높이가 460보다 작거나 같은 경우 _calendarFormat을 CalendarFormat.week로 변경함
-    //       _calendarFormat = CalendarFormat.week;
-    //     });
-    //   }
-    // });
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      final height = MediaQuery.of(context).size.height;
+      if (height <= 460) {
+        //setState() 메서드 호출로 변경사항을 즉시 적용
+        setState(() {
+          //높이가 460보다 작거나 같은 경우 _calendarFormat을 CalendarFormat.week로 변경함
+          _calendarFormat = CalendarFormat.week;
+        });
+      }
+    });
   }
 
   //달력에서 날짜를 선택할 때 호출되는 콜백 함수
@@ -105,6 +105,8 @@ class _CalendarState extends State<Calendar> {
               lastDay: DateTime.utc(2030, 3, 14),
               focusedDay: _focusedDay,
               calendarFormat: _calendarFormat,
+              //높이 값
+              rowHeight: 25,
 
               calendarBuilders: CalendarBuilders(
                 markerBuilder: (context, date, events) {

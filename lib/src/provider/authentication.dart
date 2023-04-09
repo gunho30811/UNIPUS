@@ -2,9 +2,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Authentication extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  late SharedPreferences prefs;
+
+
+  tokenSave()
+  async {
+    SharedPreferences.getInstance().then((value) {
+      prefs = value;
+    });
+    String? token = await _auth.currentUser?.getIdToken();
+    prefs.setString('token', token!);
+  }
 
   User? _user;
 
@@ -20,6 +33,7 @@ class Authentication extends ChangeNotifier {
       final UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       final User? user = result.user;
+      tokenSave();
       notifyListeners();
       return user;
     } catch (e) {
@@ -36,6 +50,7 @@ class Authentication extends ChangeNotifier {
       final UserCredential result = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
       final User? user = result.user;
+      tokenSave();
       notifyListeners();
       return user;
     } catch (e) {
@@ -88,6 +103,7 @@ class Authentication extends ChangeNotifier {
       final UserCredential result = await _auth
           .createUserWithEmailAndPassword(email: '$kakaoId@kakao.com', password: kakaoId);
       final User? user = result.user;
+      tokenSave();
       notifyListeners();
       return user;
     } catch (e) {
