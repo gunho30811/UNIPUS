@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../provider/mylist_provider.dart';
 import '../../provider/mylist_timeline_provider.dart';
+import '../common/schedule_detail.dart';
 
 // 날짜에 대한 더미 데이터
 const String Month = 'December';
@@ -254,23 +255,7 @@ class MyList extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Your Popup Title'),
-                        content: Text('Your Popup Content'),
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text('OK'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
+                  ScheduleDetailPopup(context);
                 },
                 child: Container(
                   padding: EdgeInsets.all(8),
@@ -306,7 +291,7 @@ class MyList extends StatelessWidget {
         ),
         SizedBox(
           height: 13,
-        )
+        ),
       ],
     );
   }
