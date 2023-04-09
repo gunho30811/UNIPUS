@@ -33,6 +33,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CharacterProvider())
       ],
       child: MaterialApp(
+        theme: ThemeData(
+          textTheme: ThemeData.light().textTheme.copyWith(
+                bodyMedium: TextStyle(fontFamily: 'Pretendard'),
+
+                // 다른 텍스트 스타일에 대한 폰트 설정을 추가하세요
+              ),
+        ),
         debugShowCheckedModeBanner: false,
         title: 'My App',
         home: Home(),
