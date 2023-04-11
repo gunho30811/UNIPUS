@@ -3,7 +3,7 @@ import '../model/catbox/character.dart';
 
 class CharacterProvider with ChangeNotifier {
   CharacterModel character = CharacterModel(
-    itemCounts: [3, 4, 5],
+    itemCounts: [100, 4, 5],
     exp: 0,
     characterImages: [
       'assets/images/cat_01.png',

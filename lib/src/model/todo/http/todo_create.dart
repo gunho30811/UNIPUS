@@ -7,7 +7,7 @@ class TodoCreate
   String? rep_by;//일 단위 주 단위 ex) none/day/week
   String? notify_before_min;//알람 몇분전
   String? memo;
-  String? in_hecklist;
+  String? in_checklist;
 
 
 
@@ -22,7 +22,7 @@ class TodoCreate
         'rep_by': rep_by,
         'notify_before_min': notify_before_min,
         'memo': memo,
-        'in_hecklist': in_hecklist
+        'in_checklist': in_checklist
       };
   }
 
@@ -36,7 +36,7 @@ class TodoCreate
         rep_by: map['rep_by'],
         notify_before_min: map['notify_before_min'],
         memo: map['memo'],
-        in_hecklist: map['in_hecklist']
+        in_checklist: map['in_checklist']
     );
   }
 
@@ -48,7 +48,7 @@ class TodoCreate
     required this.rep_by,
     required this.notify_before_min,
     required this.memo,
-    required this.in_hecklist});
+    required this.in_checklist});
 
 
 }

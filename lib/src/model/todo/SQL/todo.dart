@@ -1,4 +1,4 @@
-class TodoResponse
+class Todo
 {
   int? no;
   String? title;
@@ -30,8 +30,8 @@ class TodoResponse
   }
 
 
-  factory TodoResponse.fromMap(Map<String, dynamic> map) {
-    return TodoResponse(
+  factory Todo.fromMap(Map<String, dynamic> map) {
+    return Todo(
         no: map['no'],
         title: map['title'],
         category_no: map['category_no'],
@@ -44,7 +44,7 @@ class TodoResponse
     );
   }
 
-  TodoResponse({
+  Todo({
     required this.no,
     required this.title,
     required this.category_no,
