@@ -43,7 +43,7 @@ class TodoRepository
   }
 
   Future<List<Todo>?> fetchTodosFromAPI() async {
-    final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/todos'));
+    final response = await http.get(Uri.parse('uri 주소'));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
@@ -72,4 +72,6 @@ class TodoRepository
       return Todo.fromMap(maps[i]);
     });
   }
+
+
 }
