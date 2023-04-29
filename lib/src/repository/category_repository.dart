@@ -3,10 +3,10 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:http/http.dart' as http;
+import '../model/category/category.dart';
 
-import '../model/mylist/mylist.dart';
-
-class MyListRepository {
+class CategoryRepository
+{
   static Database? _database;
 
   Future<Database> get database async {
@@ -17,66 +17,51 @@ class MyListRepository {
 
   Future<Database> _initDatabase() async {
     final documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, 'mylists.db');
+    final path = join(documentsDirectory.path, 'categorys.db');
 
     return await openDatabase(
       path,
       version: 1,
       onCreate: (db, version) async {
         await db.execute('''
-          CREATE TABLE todos (
+          CREATE TABLE categorys (
             no INTEGER PRIMARY KEY,
-            title TEXT,
-            category_no TEXT,
-            start_date TEXT,
-            start_date TEXT,
-            end_date TEXT,
-            rep_by TEXT,
-            notify_before_min TEXT,
-            memo TEXT,
-            in_checklist TEXT
+            name TEXT,
+            color INTEGER
           )
         ''');
-        String? usercode;
-
-        String? title;
-        String? subtitle;
-        int? color;
-        String? data;
-        String? grade;
       },
     );
   }
 
-  Future<List<MyList>?> fetchTodosFromAPI() async {
+  Future<List<Category>?> fetchTodosFromAPI() async {
     final response = await http.get(Uri.parse('uri 주소'));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
-      return jsonResponse.map((mylist) => MyList.fromMap(mylist)).toList();
+      return jsonResponse.map((category) => Category.fromMap(category)).toList();
     } else {
       throw Exception('Failed to load todos from API');
     }
   }
 
-  Future<void> insertTodos(List<MyList> todos) async {
+  Future<void> insertCategorys(List<Category> categorys) async {
     final db = await database;
     Batch batch = db.batch();
 
-    for (var todo in todos) {
-      batch.insert('mylists', todo.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    for (var category in categorys) {
+      batch.insert('categorys', category.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
     }
 
     await batch.commit(noResult: true);
   }
 
-  Future<List<MyList>> getTodosFromDb() async {
+  Future<List<Category>> getCategorysFromDb() async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('mylists');
+    final List<Map<String, dynamic>> maps = await db.query('categorys');
 
     return List.generate(maps.length, (i) {
-      return MyList.fromMap(maps[i]);
+      return Category.fromMap(maps[i]);
     });
   }
-
 }

@@ -10,9 +10,9 @@ class MyListProvider with ChangeNotifier {
   late MyListRepository myListRepository;
   late String usercode;
   List<MyList> _items = [
-    MyList('usercode','영단어 암기', 'p145 ~ p165', 0xffFFC93C, '', ''),
-    MyList('usercode','수학 공부', 'p145 ~ p165', 0xffFFC93C, '', ''),
-    MyList('usercode','영단어 암기', 'p145 ~ p165', 0xffFFC93C, '', ''),
+    MyList(usercode: 'usercode',  title: '영단어 암기', subtitle: 'p145 ~ p165', color: 0xffFFC93C, data: '', grade: ''),
+    MyList(usercode: 'usercode',  title: '수학 공부', subtitle: 'p145 ~ p165', color: 0xffFFC93C, data: '', grade: ''),
+    MyList(usercode: 'usercode',  title: '영단어 암기', subtitle: 'p145 ~ p165', color: 0xffFFC93C, data: '', grade: ''),
   ];
 
   List<MyList> get _items2 => getTodo();
@@ -30,7 +30,7 @@ class MyListProvider with ChangeNotifier {
 
   void addItem(String usercode, String title, String subtitle, int color, String data, String grade)
   {
-    MyList newList = MyList(usercode, title, subtitle, color, data, grade);
+    MyList newList = MyList(usercode: usercode, title: title, subtitle: subtitle, color: color, data: data, grade: grade);
     _items.add(newList);
   }
 
@@ -42,7 +42,7 @@ class MyListProvider with ChangeNotifier {
     List<MyList> newList = [];
     for(Todo todo in todoList)
     {
-      MyList list = MyList(usercode, todo.title!, todo.memo!, 1, todo.start_date!, todo.notify_before_min!);
+      MyList list = MyList(usercode: usercode, title: todo.title!, subtitle: todo.memo!, color: 1, data: todo.start_date!, grade: todo.notify_before_min!);
       newList.add(list);
     }
 
