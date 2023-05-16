@@ -81,7 +81,7 @@ class _MyListHomeState extends State<MyListHome> {
             Column(
               children: [
                 Container(
-                  height: screenHeight * 0.1,
+                  height: screenHeight * 0.12,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -96,7 +96,7 @@ class _MyListHomeState extends State<MyListHome> {
                       Text(
                         Month,
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                            fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10),
                       Container(
@@ -247,7 +247,7 @@ class MyList extends StatelessWidget {
                   color: color,
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    width: 2,
+                    width: 1,
                     color: Color.fromARGB(0, 98, 98, 98).withOpacity(0.5),
                   ),
                 ),
