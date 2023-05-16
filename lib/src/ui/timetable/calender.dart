@@ -1,8 +1,13 @@
 import 'dart:math';
 
+import 'package:chur/src/model/todo/SQL/todo.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+
+import '../../provider/mylist_provider.dart';
+import '../../provider/todo_provider.dart';
 
 //statefulWidget 은 앱의 상태가 변화 할 수 있는 위젯을 정의
 class Calendar extends StatefulWidget {
@@ -20,6 +25,7 @@ class _CalendarState extends State<Calendar> {
   late DateTime _focusedDay;
   DateTime? _selectedDay;
   Map<DateTime, List<String>> _events = {};
+  late TodoProvider provider;
   // double _calendarHeightRatio = 2.2;
 
   //initState() 메서드는 위젯의 초기 상태를 설정합니다. (_calendarFormat, _focusedDay,_selectedDay 을 초기화 하고 _calendarFormat을 폰트 높이에 따라 변경함)
@@ -29,6 +35,8 @@ class _CalendarState extends State<Calendar> {
     _calendarFormat = CalendarFormat.month;
     _focusedDay = DateTime.now();
     _selectedDay = DateTime.now();
+    provider = TodoProvider();
+
 
     //WidgetsBinding.instance!.addPostFrameCallback() 메서드를 사용하여, 포스트 프레임 콜백을 등록, 화면레이아웃에 따라 화면의 높이를 계산
     WidgetsBinding.instance!.addPostFrameCallback((_) {
@@ -65,6 +73,7 @@ class _CalendarState extends State<Calendar> {
   void _addMemoToSelectedDay(String memo) {
     //선택된 날짜가 있는지 확인
     if (_selectedDay != null) {
+      //provider.addItem(0, memo, "category_no", "2023-05-15", "rep_by", "2023-05-15", "in_checklist", "memo", "notify_before_min");
       //선택된 날짜에 등록된 이벤트 목록을 참조 null인 경우 빈 리스트를 생성 후 _events[_selectedDay!]할당
       if (_events[_selectedDay!] == null) {
         _events[_selectedDay!] = [];
@@ -90,100 +99,106 @@ class _CalendarState extends State<Calendar> {
     }
     //scaffold 위젯을 사용하여 앱의 전체 레이아웃을 구성
     return SafeArea(
+
       child: Scaffold(
         //appBar 속성은 상단의 앱바를 구성
         // appBar: AppBar(),
         body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: calendarHeight,
-              //TableCalendar 위젯을 사용하여 캘린더표기
-            child:TableCalendar(
-              locale: 'en_US',
-              firstDay: DateTime.utc(2010, 10, 16),
-              lastDay: DateTime.utc(2030, 3, 14),
-              focusedDay: _focusedDay,
-              calendarFormat: _calendarFormat,
-              //높이 값
-              rowHeight: 25,
+          child: Column(
+            children: [
+              Container(
+                height: calendarHeight,
+                //TableCalendar 위젯을 사용하여 캘린더표기
+                child:TableCalendar(
+                  locale: 'en_US',
+                  firstDay: DateTime.utc(2010, 10, 16),
+                  lastDay: DateTime.utc(2030, 3, 14),
+                  focusedDay: _focusedDay,
+                  calendarFormat: _calendarFormat,
+                  //높이 값
+                  rowHeight: 25,
 
-              calendarBuilders: CalendarBuilders(
-                markerBuilder: (context, date, events) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: events.map((event) {
-                      // 이벤트에 고유한 색상을 사용하려면 메모의 해시 코드를 기반으로 색상을 생성할 수 있습니다.
-                      Color eventColor() => Color.fromARGB(
-                        255,
-                        event.hashCode % 256,
-                        (event.hashCode * 13) % 256,
-                        (event.hashCode * 37) % 256,
+                  calendarBuilders: CalendarBuilders(
+                    markerBuilder: (context, date, events) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: events.map((event) {
+                          // 이벤트에 고유한 색상을 사용하려면 메모의 해시 코드를 기반으로 색상을 생성할 수 있습니다.
+                          Color eventColor() => Color.fromARGB(
+                            255,
+                            event.hashCode % 256,
+                            (event.hashCode * 13) % 256,
+                            (event.hashCode * 37) % 256,
+                          );
+
+                          return Container(
+                            margin: EdgeInsets.symmetric(horizontal: 1.0),
+                            width: 6,
+                            height: 6,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: eventColor(),
+                            ),
+                          );
+                        }).toList(),
                       );
+                    },
+                  ),
 
-                      return Container(
-                        margin: EdgeInsets.symmetric(horizontal: 1.0),
-                        width: 6,
-                        height: 6,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: eventColor(),
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
-              ),
-
-              headerStyle: HeaderStyle(
-                titleCentered: true,
-                titleTextFormatter: (date, locale) =>
-                    DateFormat.MMMM(locale).format(date),
-                titleTextStyle: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
+                  headerStyle: HeaderStyle(
+                    titleCentered: true,
+                    titleTextFormatter: (date, locale) =>
+                        DateFormat.MMMM(locale).format(date),
+                    titleTextStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                    ),
+                    leftChevronVisible: true,
+                    rightChevronVisible: true,
+                    formatButtonVisible: false,
+                  ),
+                  //저장된 _calendarFormat을 새로운 형식 format으로 변경 후 렌더링
+                  onFormatChanged: (format) {
+                    if (_calendarFormat != format) {
+                      setState(() {
+                        _calendarFormat = format;
+                      });
+                    }
+                  },
+                  //페이지 변경시 호출 되는 콜백 함수 정의
+                  onPageChanged: (focusedDay) {
+                    _focusedDay = focusedDay;
+                  },
+                  //선택된 날짜에 대한 조건을 설정하고 선택된 날짜가 변경 시 호출되는 콜백 함수를 정의
+                  selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                  onDaySelected: _onDaySelected,
+                  eventLoader: _getEventsForDay,
                 ),
-                leftChevronVisible: true,
-                rightChevronVisible: true,
-                formatButtonVisible: false,
               ),
-              //저장된 _calendarFormat을 새로운 형식 format으로 변경 후 렌더링
-              onFormatChanged: (format) {
-                if (_calendarFormat != format) {
-                  setState(() {
-                    _calendarFormat = format;
-                  });
-                }
-              },
-              //페이지 변경시 호출 되는 콜백 함수 정의
-              onPageChanged: (focusedDay) {
-                _focusedDay = focusedDay;
-              },
-              //선택된 날짜에 대한 조건을 설정하고 선택된 날짜가 변경 시 호출되는 콜백 함수를 정의
-              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-              onDaySelected: _onDaySelected,
-              eventLoader: _getEventsForDay,
-            ),
-            ),
-            const SizedBox(height: 8.0),
-            Container(
-              height: memoHeight,
-              //선택된 날짜에 대한 이벤트 목록을 표시
-              child: ListView(
-                children: _selectedDay != null
-                    ? _getEventsForDay(_selectedDay!).map((event) {
-                        return ListTile(
-                          title: Text(event),
-                        );
-                      }).toList()
-                    : [],
+              const SizedBox(height: 8.0),
+
+              //context, provider, child 고정적인 요소
+              Container(
+                height: memoHeight,
+                //선택된 날짜에 대한 이벤트 목록을 표시
+                child: ListView(
+                  children: _selectedDay != null
+                      ? _getEventsForDay(_selectedDay!).map((event) {
+                    provider.find(_selectedDay!.year, _selectedDay!.month, _selectedDay!.day);
+                    return ListTile(
+                      title: Text(provider.title),
+                    );
+                  }).toList()
+                      : [],
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
         ),
         //오른쪽 하단에 위치하는 FloatingActionButton을 정의
+
         floatingActionButton: FloatingActionButton(
+
           // 버튼을 누르면 비동기 함수를 정의
           onPressed: () async {
             //메모 입력을 위한 TextEditingController 객체 생성

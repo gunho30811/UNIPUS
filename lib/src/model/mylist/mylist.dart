@@ -4,11 +4,11 @@ import 'dart:convert';
 class MyList {
   String? usercode;
 
-  String? title;
-  String? subtitle;
-  int? color;
-  String? data;
-  String? grade;
+  String title;
+  String subtitle;
+  int color;
+  String data;
+  String grade;
 
   // MyList(this.usercode, this.title, this.subtitle, this.color, this.data,
   //     this.grade, {required usercode});
