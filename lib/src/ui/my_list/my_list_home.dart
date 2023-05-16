@@ -81,7 +81,7 @@ class _MyListHomeState extends State<MyListHome> {
             Column(
               children: [
                 Container(
-                  height: screenHeight * 0.15,
+                  height: screenHeight * 0.1,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -126,7 +126,6 @@ class _MyListHomeState extends State<MyListHome> {
                 ),
                 Expanded(
                   child: Container(
-                      width: screenWidth * 0.95,
                       decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(

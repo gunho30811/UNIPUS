@@ -1,3 +1,4 @@
+import 'package:chur/src/ui/catbox/catbox_album.dart';
 import 'package:chur/src/ui/setting/setting_home.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ class _CatBoxHomeState extends State<CatBoxHome> {
             child: Consumer<CharacterProvider>(
                 builder: (context, characterProvider, child) {
               return Container(
-                width: screenWidth * 0.9,
+                margin: EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -94,7 +95,7 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                       height: 20,
                     ),
                     Container(
-                      height: screenHeight * 0.3,
+                      height: screenHeight * 0.35,
                       child: PageView.builder(
                         itemCount: pageCount + 1,
                         controller: _pageController,
@@ -106,42 +107,34 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                                     child: Container(
                                   width: screenWidth * 0.8,
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.25),
-                                          spreadRadius: 4,
-                                          blurRadius: 4,
-                                          offset: Offset(0, 3), // x축과 y축의 위치 조정
-                                        ),
-                                      ],
+                                      borderRadius: BorderRadius.circular(30),
                                       color: Color(0xffFFF0CB)),
-                                  child: Stack(
-                                    alignment: Alignment.topCenter,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 20,
-                                          ),
-                                          SizedBox(
-                                            width: screenWidth * 0.7,
-                                            child: LinearProgressIndicator(
-                                              value: characterProvider
-                                                  .getExpBarValue(),
-                                              backgroundColor: Colors.grey,
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                      Color.fromARGB(
-                                                          255, 250, 107, 41)),
-                                            ),
-                                          ),
-                                        ],
+                                      SizedBox(
+                                        height: 10,
                                       ),
                                       SizedBox(
-                                        width: screenWidth * 0.7,
+                                        width: screenWidth * 0.6,
                                         child: Image.asset(characterProvider
                                             .character.currentImage),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      SizedBox(
+                                        height: 7,
+                                        width: screenWidth * 0.7,
+                                        child: LinearProgressIndicator(
+                                          value: characterProvider
+                                              .getExpBarValue(),
+                                          backgroundColor: Colors.grey,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Color.fromARGB(
+                                                      255, 250, 107, 41)),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -150,16 +143,9 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                             return Container(
                               width: screenSize.width * 0.7,
                               decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(30),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 2,
-                                      blurRadius: 3,
-                                      offset: Offset(0, 3),
-                                    ),
-                                  ]),
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(30),
+                              ),
                               child: Center(
                                 child: IconButton(
                                   icon: Icon(Icons.add, size: 40),
@@ -284,7 +270,8 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                       height: 20,
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       decoration: BoxDecoration(
                         color: Color(0xffffffff),
                         borderRadius: BorderRadius.circular(20),
@@ -308,11 +295,17 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                                     fontSize: 25, fontWeight: FontWeight.bold),
                               ),
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => CatBoxAlbum()),
+                                    );
+                                  },
                                   child: Text('앨범 >',
                                       style: TextStyle(
                                         color: Color(0xffAEAEBA),
-                                        fontSize: 15,
+                                        fontSize: 18,
                                       )))
                             ],
                           ),
@@ -321,7 +314,7 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                             children: [
                               Container(
                                 margin: EdgeInsets.symmetric(vertical: 5),
-                                height: 30,
+                                height: 40,
                                 width: 350,
                                 decoration: BoxDecoration(
                                   color: Color(0xffECF0FA),
@@ -330,7 +323,7 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                               ),
                               Container(
                                 margin: EdgeInsets.symmetric(vertical: 5),
-                                height: 30,
+                                height: 40,
                                 width: excellentPercentage * 3.5,
                                 decoration: BoxDecoration(
                                   color: Color(0xffB6E8FD),
@@ -340,12 +333,12 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                               Row(
                                 children: [
                                   SizedBox(
-                                    width: 10,
+                                    width: 20,
                                   ),
                                   Text(
                                     'Excellent',
                                     style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ],
@@ -357,7 +350,7 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                             children: [
                               Container(
                                 margin: EdgeInsets.symmetric(vertical: 5),
-                                height: 30,
+                                height: 40,
                                 width: 350,
                                 decoration: BoxDecoration(
                                   color: Color(0xffECF0FA),
@@ -366,7 +359,7 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                               ),
                               Container(
                                 margin: EdgeInsets.symmetric(vertical: 5),
-                                height: 30,
+                                height: 40,
                                 width: goodPercentage * 3.5,
                                 decoration: BoxDecoration(
                                   color: Color(0xffBCF391),
@@ -376,12 +369,12 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                               Row(
                                 children: [
                                   SizedBox(
-                                    width: 10,
+                                    width: 20,
                                   ),
                                   Text(
                                     'Good',
                                     style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ],
@@ -393,7 +386,7 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                             children: [
                               Container(
                                 margin: EdgeInsets.symmetric(vertical: 5),
-                                height: 30,
+                                height: 40,
                                 width: 350,
                                 decoration: BoxDecoration(
                                   color: Color(0xffECF0FA),
@@ -402,7 +395,7 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                               ),
                               Container(
                                 margin: EdgeInsets.symmetric(vertical: 5),
-                                height: 30,
+                                height: 40,
                                 width: badPercentage * 3.5,
                                 decoration: BoxDecoration(
                                   color: Color(0xffFFC0C0),
@@ -412,12 +405,12 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                               Row(
                                 children: [
                                   SizedBox(
-                                    width: 10,
+                                    width: 20,
                                   ),
                                   Text(
                                     'Bad',
                                     style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ],

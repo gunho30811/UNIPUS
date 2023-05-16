@@ -108,193 +108,199 @@ class SettingHome extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      backgroundColor: Color(0xffF2F2F7),
-      body: ListView(
-        // ListView 또는 Column 같은 위젯 사용
-        children: [
-          Container(
-            width: screenWidth * 1,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: screenHeight * 0.01,
-                ),
-                Container(
-                  width: screenWidth * 0.9,
-                  height: screenHeight * 0.07,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(children: [
-                        Icon(
-                          Icons.settings,
-                          size: 30,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          '설정하기',
-                          style: TextStyle(
-                              fontSize: 25,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color(0xffF2F2F7),
+        body: ListView(
+          // ListView 또는 Column 같은 위젯 사용
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 24),
+              width: screenWidth * 1,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: screenHeight * 0.01,
+                  ),
+                  Container(
+                    width: screenWidth * 0.9,
+                    height: screenHeight * 0.07,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(children: [
+                          Icon(
+                            Icons.settings,
+                            size: 30,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            '설정하기',
+                            style: TextStyle(
+                                fontSize: 25,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ]),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.arrow_back))
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.01,
+                  ),
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
+                    width: screenWidth * 0.9,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      children: [
+                        BoxPopup(
+                          subject: '이름',
+                          buttonName: '수정하기',
+                          subjectTextStyle: TextStyle(
+                              fontSize: 20,
                               color: Colors.black,
                               fontWeight: FontWeight.bold),
+                          buildPopup: (BuildContext context) => NameEdit(),
                         ),
-                      ]),
-                      IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(Icons.arrow_back))
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.01,
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
-                  width: screenWidth * 0.9,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    children: [
-                      BoxPopup(
-                        subject: '이름',
-                        buttonName: '수정하기',
-                        subjectTextStyle: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        buildPopup: (BuildContext context) => NameEdit(),
-                      ),
-                      CustomDivider(),
-                      Container(
-                        height: screenHeight * 0.07,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.01,
-                            vertical: screenHeight * 0.01),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.notifications_none_outlined),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Text(
-                                  '알림설정',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            ),
-                            CupertinoSwitch(
-                              value: true,
-                              activeColor: Color(0xff34C759),
-                              // set the thumb color to blue
-                              trackColor: Colors.grey[300],
-                              // set the track color to light grey
-                              onChanged: (value) {
-                                // toggle notifications on/off
-                              },
-                            ),
-                          ],
+                        CustomDivider(),
+                        Container(
+                          height: screenHeight * 0.07,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth * 0.01,
+                              vertical: screenHeight * 0.01),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.notifications_none_outlined),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Text(
+                                    '알림설정',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                              CupertinoSwitch(
+                                value: true,
+                                activeColor: Color(0xff34C759),
+                                // set the thumb color to blue
+                                trackColor: Colors.grey[300],
+                                // set the track color to light grey
+                                onChanged: (value) {
+                                  // toggle notifications on/off
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      CustomDivider(),
-                      BoxPopup(
-                        icon: Icon(Icons.palette_outlined),
-                        subject: '카테고리 설정',
-                        buttonName: '설정',
-                        subjectTextStyle:
-                            TextStyle(fontSize: 15, color: Colors.black),
-                        buildPopup: (BuildContext context) =>
-                            CategoryListPopup(),
-                      ),
-                      CustomDivider(),
-                      BoxPopup(
-                        icon: Icon(Icons.access_time),
-                        subject: '주간시간표 시간 설정',
-                        subjectTextStyle:
-                            TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      SizedBox(
-                        width: screenWidth * 0.9,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            TimePickerButton(),
-                            TimePickerButton1(),
-                            SizedBox(
-                              height: screenHeight * 0.02,
-                            ),
-                          ],
+                        CustomDivider(),
+                        BoxPopup(
+                          icon: Icon(Icons.palette_outlined),
+                          subject: '카테고리 설정',
+                          buttonName: '설정',
+                          subjectTextStyle:
+                              TextStyle(fontSize: 15, color: Colors.black),
+                          buildPopup: (BuildContext context) =>
+                              CategoryListPopup(),
                         ),
-                      ),
-                    ],
+                        CustomDivider(),
+                        BoxPopup(
+                          icon: Icon(Icons.access_time),
+                          subject: '주간시간표 시간 설정',
+                          subjectTextStyle:
+                              TextStyle(fontSize: 15, color: Colors.black),
+                        ),
+                        SizedBox(
+                          width: screenWidth * 0.9,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              TimePickerButton(),
+                              TimePickerButton1(),
+                              SizedBox(
+                                height: screenHeight * 0.02,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.03,
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
-                  width: screenWidth * 0.9,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
+                  SizedBox(
+                    height: screenHeight * 0.03,
                   ),
-                  child: Column(
-                    children: [
-                      BoxPopup(
-                        icon: Icon(Icons.person_outlined),
-                        subject: '유저코드',
-                        subjectTextStyle:
-                            TextStyle(fontSize: 15, color: Colors.black),
-                        buttonName: 'SWR3079653',
-                      ),
-                      CustomDivider(),
-                      BoxPopup(
-                        icon: Icon(Icons.published_with_changes_outlined),
-                        subject: '버전 변경하기',
-                        subjectTextStyle:
-                            TextStyle(fontSize: 15, color: Colors.black),
-                        buttonName: 'Mento',
-                        buildPopup: (BuildContext context) =>
-                            VersionSelectPopup(
-                                categories: ['menti', 'mento', 'single'],
-                                selectedCategory: 'mento'),
-                      ),
-                    ],
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
+                    width: screenWidth * 0.9,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      children: [
+                        BoxPopup(
+                          icon: Icon(Icons.person_outlined),
+                          subject: '유저코드',
+                          subjectTextStyle:
+                              TextStyle(fontSize: 15, color: Colors.black),
+                          buttonName: 'SWR3079653',
+                        ),
+                        CustomDivider(),
+                        BoxPopup(
+                          icon: Icon(Icons.published_with_changes_outlined),
+                          subject: '버전 변경하기',
+                          subjectTextStyle:
+                              TextStyle(fontSize: 15, color: Colors.black),
+                          buttonName: 'Mento',
+                          buildPopup: (BuildContext context) =>
+                              VersionSelectPopup(
+                                  categories: ['menti', 'mento', 'single'],
+                                  selectedCategory: 'mento'),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.03,
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
-                  width: screenWidth * 0.9,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
+                  SizedBox(
+                    height: screenHeight * 0.03,
                   ),
-                  child: BoxPopup(
-                    icon: Icon(Icons.change_circle_outlined),
-                    subject: '멘티 변경하기',
-                    subjectTextStyle:
-                        TextStyle(fontSize: 15, color: Colors.black),
-                    buttonName: '김00',
-                    buildPopup: (BuildContext context) => VersionSelectPopup(
-                        categories: ['김00', '박00', '이00'],
-                        selectedCategory: '김00'),
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
+                    width: screenWidth * 0.9,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: BoxPopup(
+                      icon: Icon(Icons.change_circle_outlined),
+                      subject: '멘티 변경하기',
+                      subjectTextStyle:
+                          TextStyle(fontSize: 15, color: Colors.black),
+                      buttonName: '김00',
+                      buildPopup: (BuildContext context) => VersionSelectPopup(
+                          categories: ['김00', '박00', '이00'],
+                          selectedCategory: '김00'),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
