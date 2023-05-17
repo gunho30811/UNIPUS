@@ -1,5 +1,6 @@
 import 'package:chur/src/provider/home_provider.dart';
 import 'package:chur/src/provider/mylist_provider.dart';
+import 'package:chur/src/provider/selectbox_provider.dart';
 import 'package:chur/src/provider/todo_provider.dart';
 import 'package:chur/src/ui/authentication/loginScreen.dart';
 import 'package:chur/src/ui/catbox/catbox_home.dart';
@@ -19,6 +20,9 @@ class Home extends StatelessWidget {
       title: 'Flutter Demo',
       home: MultiProvider(
         providers: [
+          ChangeNotifierProvider<ImageChoice>(
+            create: (_) => ImageChoice(),
+          ),
           ChangeNotifierProvider<HomeProvider>(
             create: (_) => HomeProvider(),
           ),
