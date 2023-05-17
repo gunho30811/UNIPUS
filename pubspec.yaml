@@ -96,6 +96,10 @@ flutter:
     - assets/images/cat_02.png
     - assets/images/cat_03.png
     - assets/images/album.png
+    - assets/images/Box_1.png
+    - assets/images/Box_2.png
+    - assets/images/Box_3.png
+    - assets/images/Box_4.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

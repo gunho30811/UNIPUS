@@ -3,6 +3,7 @@ import 'package:chur/src/provider/mylist_provider.dart';
 import 'package:chur/src/provider/todo_provider.dart';
 import 'package:chur/src/ui/authentication/loginScreen.dart';
 import 'package:chur/src/ui/catbox/catbox_home.dart';
+import 'package:chur/src/ui/common/selectbox.dart';
 import 'package:chur/src/ui/my_list/my_list_home.dart';
 import 'package:chur/src/ui/timetable/calender.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   static List<Widget> _widgetOptions = <Widget>[
     Calendar(),
-    LoginScreen(),
+    ImageSelectionPage(),
     MyListHome(),
     CatBoxHome(),
   ];
