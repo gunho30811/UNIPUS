@@ -1,4 +1,5 @@
 import 'package:chur/src/ui/catbox/catbox_album.dart';
+import 'package:chur/src/ui/common/vesion_select.dart';
 import 'package:chur/src/ui/setting/setting_home.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -299,7 +300,8 @@ class _CatBoxHomeState extends State<CatBoxHome> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => CatBoxAlbum()),
+                                          builder: (context) =>
+                                              SelectVersion()),
                                     );
                                   },
                                   child: Text('앨범 >',
