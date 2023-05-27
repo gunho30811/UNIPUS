@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../model/mylist/mylist.dart';
 import '../model/todo/SQL/todo.dart';
 import '../repository/todo_repository.dart';
-
+//해당 프로바이더 todo_provider와 합칠방안 모색
 class MyListProvider with ChangeNotifier {
   late MyListRepository myListRepository;
   late String usercode;

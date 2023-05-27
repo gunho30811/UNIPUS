@@ -26,6 +26,7 @@ class _CalendarState extends State<Calendar> {
   DateTime? _selectedDay;
   Map<DateTime, List<String>> _events = {};
   late TodoProvider provider;
+  int count = 0;
   // double _calendarHeightRatio = 2.2;
 
   //initState() 메서드는 위젯의 초기 상태를 설정합니다. (_calendarFormat, _focusedDay,_selectedDay 을 초기화 하고 _calendarFormat을 폰트 높이에 따라 변경함)
@@ -73,7 +74,8 @@ class _CalendarState extends State<Calendar> {
   void _addMemoToSelectedDay(String memo) {
     //선택된 날짜가 있는지 확인
     if (_selectedDay != null) {
-      //provider.addItem(0, memo, "category_no", "2023-05-15", "rep_by", "2023-05-15", "in_checklist", "memo", "notify_before_min");
+      provider.addItem(count, memo, "category_no", "2023-05-27", "rep_by", "2023-05-27", "in_checklist", "memo", "notify_before_min");
+      count++;
       //선택된 날짜에 등록된 이벤트 목록을 참조 null인 경우 빈 리스트를 생성 후 _events[_selectedDay!]할당
       if (_events[_selectedDay!] == null) {
         _events[_selectedDay!] = [];
@@ -186,7 +188,7 @@ class _CalendarState extends State<Calendar> {
                       ? _getEventsForDay(_selectedDay!).map((event) {
                     provider.find(_selectedDay!.year, _selectedDay!.month, _selectedDay!.day);
                     return ListTile(
-                      title: Text(provider.title),
+                      title: Text(Provider.of<TodoProvider>(context).title.toString()),
                     );
                   }).toList()
                       : [],

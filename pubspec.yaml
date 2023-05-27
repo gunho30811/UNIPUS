@@ -50,7 +50,7 @@ dependencies:
   google_sign_in_web: ^0.11.0+2
   kakao_flutter_sdk: ^1.4.2
   path_provider: ^2.0.9
-  path: ^1.8.1
+  path: ^1.8.0
   sqflite_common_ffi: ^2.2.5
 
 dev_dependencies:

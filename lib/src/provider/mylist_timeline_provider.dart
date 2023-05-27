@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../model/mylist/timeline.dart';
-
+//해당 프로바이더 todo_provider와 합칠방안 모색
 class TimeLineProvider with ChangeNotifier {
   List<TimeLine> _items = [
     TimeLine(
