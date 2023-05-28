@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:sqflite/sqflite.dart';
@@ -57,29 +55,6 @@ class TodoRepository {
     }
   }
 
-  Future<void> saveTodosToDatabase() async {
-    try {
-      final response = await http.get(Uri.parse('uri 주소'));
-
-      if (response.statusCode == 200) {
-        List jsonResponse = json.decode(response.body);
-
-        // 데이터베이스에 저장
-        final database = await openDatabase('todos.db');
-        final batch = database.batch();
-
-        for (var todo in jsonResponse) {
-          //batch.insert('todos', );
-        }
-
-        await batch.commit();
-      } else {
-        throw Exception('Failed to load todos from API');
-      }
-    } catch (e) {
-      print('Error occurred: $e');
-    }
-  }
 
   Future<void> insertTodos(List<Todo> todos) async {
     try

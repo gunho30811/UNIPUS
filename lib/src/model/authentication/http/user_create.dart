@@ -1,4 +1,4 @@
-class UserInfo
+class UserCreate
 {
   String? name;
   String? gender;
@@ -16,8 +16,8 @@ class UserInfo
     };
   }
 
-  factory UserInfo.fromMap(Map<String, dynamic> map) {
-    return UserInfo(
+  factory UserCreate.fromMap(Map<String, dynamic> map) {
+    return UserCreate(
       name: map['name'],
       gender: map['gender'],
       birth: map['birth'],
@@ -26,7 +26,7 @@ class UserInfo
     );
   }
 
-  UserInfo({required this.name, required this.gender, required this.birth, required this.phone, required this.group});
+  UserCreate({required this.name, required this.gender, required this.birth, required this.phone, required this.group});
 
 
 }

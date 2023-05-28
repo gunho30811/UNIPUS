@@ -1,17 +1,28 @@
 
+import 'package:chur/src/model/authentication/http/user_create.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../repository/authentication_repository.dart';
+
 class Authentication extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final AuthenticationRepository repository = AuthenticationRepository();
 
   late SharedPreferences prefs;
 
 
-  tokenSave()
-  async {
+  void printToken()
+  {
+    SharedPreferences.getInstance().then((value) {
+      prefs = value;
+    });
+    String? token = prefs.getString('token');
+    print("토큰 : \n$token");
+  }
+  tokenSave() async {
     SharedPreferences.getInstance().then((value) {
       prefs = value;
     });
@@ -33,7 +44,11 @@ class Authentication extends ChangeNotifier {
       final UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       final User? user = result.user;
+      repository.init();
+      UserCreate userCreate = UserCreate(name: '채현수', gender: 'male', birth: '1999-08-03', phone: '010-2111-3250', group: 'single');
+      repository.createUserInfo(userCreate);
       tokenSave();
+      printToken();
       notifyListeners();
       return user;
     } catch (e) {
@@ -50,6 +65,7 @@ class Authentication extends ChangeNotifier {
       final UserCredential result = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
       final User? user = result.user;
+      repository.init();
       tokenSave();
       notifyListeners();
       return user;
@@ -112,6 +128,8 @@ class Authentication extends ChangeNotifier {
     }
   }
 
+  
+  
 
 
 }
